@@ -89,7 +89,7 @@ const Hero = () => {
   const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
   return (
-    <section className="relative pt-32 pb-20 px-6 min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white">
+    <section className="relative pt-24 pb-16 px-4 sm:px-6 lg:pt-32 lg:pb-20 min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden z-0">
         <motion.div
           animate={{ opacity: [0.04, 0.1, 0.04], scale: [1, 1.05, 1] }}
@@ -110,7 +110,7 @@ const Hero = () => {
             {t.badge}
           </div>
 
-          <h1 className="text-5xl md:text-6xl font-display font-bold leading-[1.05] mb-6 text-black">
+          <h1 className="text-[2.1rem] sm:text-5xl lg:text-6xl font-display font-bold leading-[1.08] mb-5 md:mb-6 text-black">
             {t.h1[0]}<br />
             {t.h1[1]}<br />
             <span className="text-black/30">{t.h1dim[0]}<br />{t.h1dim[1]}</span>
@@ -149,7 +149,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="relative flex items-center justify-center"
+          className="relative hidden lg:flex items-center justify-center"
         >
           <svg className="w-full" viewBox="0 0 500 255" preserveAspectRatio="xMidYMid meet">
             <defs>
@@ -252,14 +252,14 @@ const Hero = () => {
 };
 
 const SectionHeader = ({ title, subtitle, badge }: { title: string; subtitle: string; badge?: string }) => (
-  <div className="text-center mb-16">
+  <div className="text-center mb-10 md:mb-16">
     {badge && (
-      <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+      <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 md:mb-4">
         {badge}
       </div>
     )}
-    <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-black">{title}</h2>
-    <p className="text-black/40 max-w-2xl mx-auto">{subtitle}</p>
+    <h2 className="text-[1.7rem] sm:text-4xl md:text-5xl font-display font-bold mb-3 md:mb-4 text-black">{title}</h2>
+    <p className="text-sm md:text-base text-black/40 max-w-2xl mx-auto">{subtitle}</p>
   </div>
 );
 
@@ -275,14 +275,14 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-24 px-8 bg-white">
+    <section id="services" className="py-16 px-4 sm:px-6 md:py-24 md:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-10 md:mb-16">
           <div>
-            <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+            <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 md:mb-4">
               {t.badge}
             </div>
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight">
+            <h2 className="text-[1.7rem] sm:text-4xl md:text-5xl font-display font-bold text-black leading-tight">
               {t.heading[0]}<br />{t.heading[1]}
             </h2>
           </div>
@@ -387,11 +387,11 @@ const HowItWorks = () => {
   const t = translations[lang].howItWorks;
 
   return (
-    <section id="how-it-works" className="py-24 px-6 bg-[#F7F7F5] border-y border-black/[0.06]">
+    <section id="how-it-works" className="py-16 px-4 sm:px-6 md:py-24 bg-[#F7F7F5] border-y border-black/[0.06]">
       <div className="max-w-7xl mx-auto">
         <SectionHeader badge={t.badge} title={t.heading} subtitle={t.sub} />
 
-        <div className="grid md:grid-cols-4 gap-8 relative">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 relative">
           <div className="hidden md:block absolute top-8 left-0 w-full h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
 
           {t.steps.map((step, i) => (
@@ -422,16 +422,16 @@ const WhyUs = () => {
   ];
 
   return (
-    <section id="why-us" className="py-24 px-6 bg-white">
+    <section id="why-us" className="py-16 px-4 sm:px-6 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="border border-black/[0.07] rounded-[40px] p-12 relative overflow-hidden bg-[#F7F7F5]">
+        <div className="border border-black/[0.07] rounded-[20px] md:rounded-[40px] p-5 sm:p-8 md:p-12 relative overflow-hidden bg-[#F7F7F5]">
           <div className="absolute inset-0 grid-pattern opacity-60" />
           <div className="relative z-10">
-            <div className="text-center mb-16">
-              <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+            <div className="text-center mb-8 md:mb-16">
+              <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 md:mb-4">
                 {t.badge}
               </div>
-              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-black">
+              <h2 className="text-[1.7rem] sm:text-4xl md:text-5xl font-display font-bold mb-4 md:mb-6 text-black">
                 {t.heading[0]}<br />{t.heading[1]}
               </h2>
               <p className="text-black/40 max-w-2xl mx-auto">
@@ -473,14 +473,14 @@ const CaseStudies = () => {
   ];
 
   return (
-    <section id="work" className="py-24 px-8 bg-[#F7F7F5]">
+    <section id="work" className="py-16 px-4 sm:px-6 md:py-24 md:px-8 bg-[#F7F7F5]">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-10 md:mb-16">
           <div>
-            <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+            <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 md:mb-4">
               {t.badge}
             </div>
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight">
+            <h2 className="text-[1.7rem] sm:text-4xl md:text-5xl font-display font-bold text-black leading-tight">
               {t.heading}
             </h2>
           </div>
@@ -493,7 +493,7 @@ const CaseStudies = () => {
           {t.items.map((c, i) => (
             <motion.div
               key={i}
-              className="bg-white border border-black/[0.08] rounded-3xl p-8 hover:border-black/20 hover:shadow-sm transition-all"
+              className="bg-white border border-black/[0.08] rounded-3xl p-5 md:p-8 hover:border-black/20 hover:shadow-sm transition-all"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
@@ -546,7 +546,7 @@ const About = () => {
   const t = translations[lang].about;
 
   return (
-    <section id="about" className="py-24 px-6 bg-white border-y border-black/[0.06]">
+    <section id="about" className="py-16 px-4 sm:px-6 md:py-24 bg-white border-y border-black/[0.06]">
       <div className="max-w-5xl mx-auto">
 
         <motion.div
@@ -554,12 +554,12 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-8 md:mb-14"
         >
-          <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/[0.08] text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 mb-4">
+          <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/[0.08] text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 mb-3 md:mb-4">
             {t.badge}
           </div>
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight">
+          <h2 className="text-[1.7rem] sm:text-4xl md:text-5xl font-display font-bold text-black leading-tight">
             {t.headline}
           </h2>
         </motion.div>
@@ -663,7 +663,7 @@ const Testimonials = () => {
   const t = translations[lang].testimonials;
 
   return (
-    <section className="py-24 px-6 bg-white">
+    <section className="py-16 px-4 sm:px-6 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto">
         <SectionHeader badge={t.badge} title={t.heading} subtitle={t.sub} />
 
@@ -706,7 +706,7 @@ const FAQ = () => {
   const t = translations[lang].faq;
 
   return (
-    <section id="faq" className="py-24 px-6 bg-[#F7F7F5]">
+    <section id="faq" className="py-16 px-4 sm:px-6 md:py-24 bg-[#F7F7F5]">
       <div className="max-w-3xl mx-auto">
         <SectionHeader badge={t.badge} title={t.heading} subtitle={t.sub} />
 
@@ -715,7 +715,7 @@ const FAQ = () => {
             <div key={i} className="bg-white rounded-2xl overflow-hidden border border-black/[0.07]">
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-black/[0.02] transition-colors"
+                className="w-full px-5 py-4 md:px-8 md:py-6 flex items-center justify-between text-left hover:bg-black/[0.02] transition-colors"
               >
                 <span className="font-bold text-black pr-4">{faq.q}</span>
                 <Plus className={`w-5 h-5 text-black transition-transform duration-300 shrink-0 ${openIndex === i ? 'rotate-45' : ''}`} />
@@ -728,7 +728,7 @@ const FAQ = () => {
                     exit={{ height: 0, opacity: 0 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-8 pb-6 text-black/50 text-sm leading-relaxed">{faq.a}</div>
+                    <div className="px-5 pb-4 md:px-8 md:pb-6 text-black/50 text-sm leading-relaxed">{faq.a}</div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -757,7 +757,7 @@ const CTA = () => {
   const t = translations[lang].cta;
 
   return (
-    <section id="book" className="py-24 px-6 bg-black text-white relative overflow-hidden">
+    <section id="book" className="py-16 px-4 sm:px-6 md:py-24 bg-black text-white relative overflow-hidden">
       <div
         className="absolute inset-0 opacity-20"
         style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0)", backgroundSize: "40px 40px" }}
@@ -769,9 +769,9 @@ const CTA = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-8 md:mb-14"
         >
-          <h2 className="text-5xl md:text-6xl font-display font-bold mb-6 text-white">
+          <h2 className="text-[2rem] sm:text-5xl lg:text-6xl font-display font-bold mb-4 md:mb-6 text-white">
             {t.heading[0]}<br />{t.heading[1]}
           </h2>
           <p className="text-white/50 text-lg max-w-xl mx-auto">
@@ -792,7 +792,7 @@ const CTA = () => {
           <Cal
             namespace="15min"
             calLink="alioune-kane-1qdw6v/15min"
-            style={{ width: "100%", height: "600px", overflow: "scroll" }}
+            style={{ width: "100%", height: "clamp(450px, 80vw, 600px)", overflow: "scroll" }}
             config={{ layout: "month_view" }}
           />
         </div>
@@ -807,10 +807,10 @@ const Footer = () => {
   const t = translations[lang].footer;
 
   return (
-    <footer className="py-12 px-6 bg-black text-white border-t border-white/[0.06]">
+    <footer className="py-10 px-4 sm:px-6 md:py-12 bg-black text-white border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
-          <div className="col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+          <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-6">
               <div className="w-7 h-7 bg-white flex items-center justify-center">
                 <Zap className="text-black w-4 h-4" />
