@@ -76,8 +76,8 @@ const InfiniteMarquee = () => {
 const BackgroundEffects = () => (
   <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
     <div className="absolute inset-0 grid-pattern" />
-    <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-black/[0.03] blur-[150px]" />
-    <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-black/[0.02] blur-[150px]" />
+    <div className="hidden md:block absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-black/[0.03] blur-[150px]" />
+    <div className="hidden md:block absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-black/[0.02] blur-[150px]" />
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-black/[0.06] to-transparent" />
   </div>
 );
@@ -94,7 +94,7 @@ const Hero = () => {
         <motion.div
           animate={{ opacity: [0.04, 0.1, 0.04], scale: [1, 1.05, 1] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-black/[0.05] blur-[130px] rounded-full"
+          className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-black/[0.05] blur-[130px] rounded-full"
         />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-screen bg-gradient-to-b from-black/20 via-black/5 to-transparent" />
       </div>
@@ -398,7 +398,7 @@ const HowItWorks = () => {
             <div key={i} className="relative z-10 text-center">
               <div className="w-16 h-16 bg-white border border-black/10 rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm relative">
                 <span className="text-black font-display font-bold text-xl">{step.number}</span>
-                <div className="absolute inset-0 rounded-full border border-black/20 animate-ping opacity-15" />
+                <div className="hidden md:block absolute inset-0 rounded-full border border-black/20 animate-ping opacity-15" />
               </div>
               <h3 className="text-xl font-bold mb-3 text-black">{step.title}</h3>
               <p className="text-black/40 text-sm leading-relaxed">{step.desc}</p>
@@ -580,6 +580,8 @@ const About = () => {
                   src="/Alioune.png"
                   alt="Alioune Abdou Salam Kane"
                   className="w-full h-full object-cover object-top"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               {/* Name + role */}
@@ -814,7 +816,7 @@ const Footer = () => {
                 <Zap className="text-black w-4 h-4" />
               </div>
               <span className="font-display font-bold text-xl tracking-tight text-white">
-                Click<span className="font-black">rise</span>
+                Clickrise
               </span>
             </div>
             <p className="text-white/35 max-w-sm text-sm leading-relaxed mb-4">
@@ -862,10 +864,15 @@ export default function App() {
   );
 
   useEffect(() => {
-    (async function () {
+    const init = async () => {
       const cal = await getCalApi({ namespace: "15min" });
       cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-    })();
+    };
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(init);
+    } else {
+      setTimeout(init, 2000);
+    }
   }, []);
 
   return (
