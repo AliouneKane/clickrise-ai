@@ -7,7 +7,7 @@
 
 @layer base {
   body {
-    @apply bg-white text-[#0A0A0A] antialiased selection:bg-black/15;
+    @apply bg-white text-[#0A0A0A] subpixel-antialiased selection:bg-black/15;
   }
 }
 
