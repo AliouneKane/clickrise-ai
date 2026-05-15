@@ -22,8 +22,25 @@
     background-size: 20px 20px;
   }
 
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.02) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 8s infinite linear;
+  }
+
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+
   .glass {
     @apply bg-black/[0.03] backdrop-blur-xl border border-black/[0.08];
   }
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
