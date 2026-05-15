@@ -1,0 +1,15 @@
+/* ================================================
+   FONTS — Source de vérité unique pour la typo
+   Ne jamais modifier sans permission explicite.
+   ================================================
+
+   Display / Titres : Syne (400 500 600 700 800)
+   Corps de texte   : DM Sans (300 400 500 600 + italic)
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Syne", sans-serif;
+}
