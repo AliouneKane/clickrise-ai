@@ -6,7 +6,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import { Navbar1 } from './components/ui/navbar-1';
-import { motion, useScroll, useTransform, AnimatePresence, MotionConfig } from 'motion/react';
+import { m as motion, LazyMotion, domAnimation, useScroll, useTransform, MotionConfig } from 'motion/react';
 import {
   Activity,
   ArrowRight,
@@ -731,18 +731,13 @@ const FAQ = () => {
                 <span className="font-bold text-black pr-4">{faq.q}</span>
                 <Plus className={`w-5 h-5 text-black transition-transform duration-300 shrink-0 ${openIndex === i ? 'rotate-45' : ''}`} />
               </button>
-              <AnimatePresence>
-                {openIndex === i && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-8 pb-6 text-black/50 text-sm leading-relaxed">{faq.a}</div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div
+                style={{ display: 'grid', gridTemplateRows: openIndex === i ? '1fr' : '0fr', transition: 'grid-template-rows 0.3s ease' }}
+              >
+                <div className="overflow-hidden">
+                  <div className="px-8 pb-6 text-black/50 text-sm leading-relaxed">{faq.a}</div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -913,6 +908,7 @@ export default function App() {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   return (
+    <LazyMotion features={domAnimation}>
     <MotionConfig reducedMotion={isMobile ? "always" : "never"}>
     <LangContext.Provider value={{ lang, setLang }}>
       <div className="relative min-h-screen font-sans bg-white selection:bg-black/15">
@@ -935,5 +931,6 @@ export default function App() {
       </div>
     </LangContext.Provider>
     </MotionConfig>
+    </LazyMotion>
   );
 }

@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useState } from "react"
-import { motion, AnimatePresence } from "motion/react"
+import { m as motion, AnimatePresence } from "motion/react"
 import { Menu, X, Zap, ArrowRight } from "lucide-react"
 import { useLang } from "../../lib/i18n"
 import { translations } from "../../content/translations"
