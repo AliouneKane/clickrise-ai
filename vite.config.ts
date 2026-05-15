@@ -15,25 +15,9 @@ export default defineConfig(({mode}) => {
         '@': path.resolve(__dirname, '.'),
       },
     },
-    build: {
-      target: 'es2020',
-      cssCodeSplit: true,
-      reportCompressedSize: false,
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (!id.includes('node_modules')) return;
-            if (id.includes('@calcom')) return 'cal';
-            if (id.includes('motion')) return 'motion';
-            if (id.includes('lucide-react')) return 'icons';
-            if (id.includes('react-dom') || id.includes('/react/')) return 'react';
-          },
-        },
-      },
-    },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // File watching is disabled to prevent flickering during agent edits.
+      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
     },
   };

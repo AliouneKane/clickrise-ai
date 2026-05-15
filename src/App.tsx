@@ -3,20 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
+import Cal, { getCalApi } from '@calcom/embed-react';
 import { Navbar1 } from './components/ui/navbar-1';
 import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
-
-const Cal = lazy(() => import('@calcom/embed-react').then((m) => ({ default: m.default })));
-let calApiPromise: Promise<void> | null = null;
-const ensureCalApi = () => {
-  if (calApiPromise) return calApiPromise;
-  calApiPromise = import('@calcom/embed-react').then(async ({ getCalApi }) => {
-    const cal = await getCalApi({ namespace: '15min' });
-    cal('ui', { hideEventTypeDetails: false, layout: 'month_view' });
-  });
-  return calApiPromise;
-};
 import {
   Activity,
   ArrowRight,
@@ -589,10 +579,6 @@ const About = () => {
                 <img
                   src="/Alioune.png"
                   alt="Alioune Abdou Salam Kane"
-                  width={680}
-                  height={640}
-                  loading="lazy"
-                  decoding="async"
                   className="w-full h-full object-cover object-top"
                 />
               </div>
@@ -767,26 +753,6 @@ const FAQ = () => {
 const CTA = () => {
   const { lang } = useLang();
   const t = translations[lang].cta;
-  const holderRef = useRef<HTMLDivElement | null>(null);
-  const [showCal, setShowCal] = useState(false);
-
-  useEffect(() => {
-    if (showCal) return;
-    const node = holderRef.current;
-    if (!node) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          ensureCalApi();
-          setShowCal(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: '600px 0px' },
-    );
-    io.observe(node);
-    return () => io.disconnect();
-  }, [showCal]);
 
   return (
     <section id="book" className="py-24 px-6 bg-black text-white relative overflow-hidden">
@@ -820,17 +786,13 @@ const CTA = () => {
           ))}
         </div>
 
-        <div ref={holderRef} className="rounded-2xl overflow-hidden bg-white" style={{ minHeight: 600 }}>
-          {showCal && (
-            <Suspense fallback={<div style={{ width: '100%', height: 600 }} />}>
-              <Cal
-                namespace="15min"
-                calLink="alioune-kane-1qdw6v/15min"
-                style={{ width: "100%", height: "600px", overflow: "scroll" }}
-                config={{ layout: "month_view" }}
-              />
-            </Suspense>
-          )}
+        <div className="rounded-2xl overflow-hidden bg-white">
+          <Cal
+            namespace="15min"
+            calLink="alioune-kane-1qdw6v/15min"
+            style={{ width: "100%", height: "600px", overflow: "scroll" }}
+            config={{ layout: "month_view" }}
+          />
         </div>
         <p className="text-center text-white/20 text-xs mt-4">{t.fine}</p>
       </div>
@@ -900,31 +862,10 @@ export default function App() {
   );
 
   useEffect(() => {
-    let cancelled = false;
-    const trigger = () => {
-      if (cancelled) return;
-      ensureCalApi();
-    };
-
-    const idle = (window as any).requestIdleCallback as
-      | ((cb: () => void, opts?: { timeout?: number }) => number)
-      | undefined;
-    const idleHandle = idle ? idle(trigger, { timeout: 4000 }) : window.setTimeout(trigger, 3000);
-
-    const onInteract = () => trigger();
-    window.addEventListener('pointerdown', onInteract, { once: true, passive: true });
-    window.addEventListener('keydown', onInteract, { once: true });
-
-    return () => {
-      cancelled = true;
-      if (idle && (window as any).cancelIdleCallback) {
-        (window as any).cancelIdleCallback(idleHandle);
-      } else {
-        clearTimeout(idleHandle as number);
-      }
-      window.removeEventListener('pointerdown', onInteract);
-      window.removeEventListener('keydown', onInteract);
-    };
+    (async function () {
+      const cal = await getCalApi({ namespace: "15min" });
+      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+    })();
   }, []);
 
   return (
