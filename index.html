@@ -2,13 +2,48 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Clickrise — AI Growth Systems for B2B Companies</title>
-    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://app.cal.com" />
+    <link rel="dns-prefetch" href="https://unpkg.com" />
+
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap"
+    />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Defer the ElevenLabs widget until the page is idle so it doesn't compete
+      // with the initial render on mobile/tablet networks.
+      (function () {
+        function loadConvai() {
+          if (window.__convaiLoaded) return;
+          window.__convaiLoaded = true;
+          var s = document.createElement('script');
+          s.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
+          s.async = true;
+          document.body.appendChild(s);
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadConvai, { timeout: 4000 });
+        } else {
+          window.addEventListener('load', function () {
+            setTimeout(loadConvai, 2500);
+          });
+        }
+      })();
+    </script>
   </body>
 </html>
 
