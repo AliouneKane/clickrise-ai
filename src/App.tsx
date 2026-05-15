@@ -30,6 +30,22 @@ import { translations } from './content/translations';
 
 // --- Components ---
 
+const LazySection = ({ children, minHeight = "600px" }: { children: React.ReactNode; minHeight?: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { rootMargin: '400px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return <div ref={ref}>{visible ? children : <div style={{ minHeight }} />}</div>;
+};
+
 const InfiniteMarquee = () => {
   const { lang } = useLang();
   const t = translations[lang];
@@ -75,9 +91,9 @@ const InfiniteMarquee = () => {
 
 const BackgroundEffects = () => (
   <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-    <div className="absolute inset-0 grid-pattern" />
-    <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-black/[0.03] blur-[150px]" />
-    <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-black/[0.02] blur-[150px]" />
+    <div className="absolute inset-0 hidden md:block grid-pattern" />
+    <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-black/[0.03] blur-[150px] hidden md:block" />
+    <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-black/[0.02] blur-[150px] hidden md:block" />
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-black/[0.06] to-transparent" />
   </div>
 );
@@ -149,7 +165,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="relative flex items-center justify-center"
+          className="relative hidden lg:flex items-center justify-center"
         >
           <svg className="w-full" viewBox="0 0 500 255" preserveAspectRatio="xMidYMid meet">
             <defs>
@@ -580,6 +596,7 @@ const About = () => {
                   src="/Alioune.png"
                   alt="Alioune Abdou Salam Kane"
                   className="w-full h-full object-cover object-top"
+                  loading="lazy"
                 />
               </div>
               {/* Name + role */}
@@ -906,13 +923,13 @@ export default function App() {
           <Hero />
           <InfiniteMarquee />
           <Services />
-          <HowItWorks />
-          <WhyUs />
-          <CaseStudies />
-          <About />
-          <Testimonials />
-          <FAQ />
-          <CTA />
+          <LazySection minHeight="700px"><HowItWorks /></LazySection>
+          <LazySection minHeight="700px"><WhyUs /></LazySection>
+          <LazySection minHeight="700px"><CaseStudies /></LazySection>
+          <LazySection minHeight="600px"><About /></LazySection>
+          <LazySection minHeight="500px"><Testimonials /></LazySection>
+          <LazySection minHeight="400px"><FAQ /></LazySection>
+          <LazySection minHeight="800px"><CTA /></LazySection>
         </main>
         <Footer />
         <elevenlabs-convai agent-id="agent_3601kjqppkvafmra74f6ph2v55vq"></elevenlabs-convai>
