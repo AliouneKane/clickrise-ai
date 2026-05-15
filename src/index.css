@@ -21,5 +21,15 @@
   .glass {
     @apply bg-black/[0.03] backdrop-blur-xl border border-black/[0.08];
   }
+
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .marquee-track {
+    animation: marquee-scroll 35s linear infinite;
+    will-change: transform;
+  }
 }
 

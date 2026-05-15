@@ -6,7 +6,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import { Navbar1 } from './components/ui/navbar-1';
-import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
+import { motion, useScroll, useTransform, AnimatePresence, MotionConfig } from 'motion/react';
 import {
   Activity,
   ArrowRight,
@@ -68,11 +68,7 @@ const InfiniteMarquee = () => {
       <div className="text-center text-black/25 text-xs font-bold uppercase tracking-[0.2em] mb-6">
         {t.marquee.label}
       </div>
-      <motion.div
-        className="flex gap-24 items-center whitespace-nowrap"
-        animate={{ x: [0, -1200] }}
-        transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-      >
+      <div className="marquee-track flex gap-24 items-center whitespace-nowrap">
         {[...tools, ...tools].map((tool, i) => (
           <div
             key={i}
@@ -84,7 +80,7 @@ const InfiniteMarquee = () => {
             <span className="font-display font-bold text-xl tracking-tight">{tool.name}</span>
           </div>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 };
@@ -914,7 +910,10 @@ export default function App() {
     }
   }, []);
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
+    <MotionConfig reducedMotion={isMobile ? "always" : "never"}>
     <LangContext.Provider value={{ lang, setLang }}>
       <div className="relative min-h-screen font-sans bg-white selection:bg-black/15">
         <BackgroundEffects />
@@ -935,5 +934,6 @@ export default function App() {
         <elevenlabs-convai agent-id="agent_3601kjqppkvafmra74f6ph2v55vq"></elevenlabs-convai>
       </div>
     </LangContext.Provider>
+    </MotionConfig>
   );
 }
