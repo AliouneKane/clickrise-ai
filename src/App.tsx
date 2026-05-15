@@ -76,8 +76,8 @@ const InfiniteMarquee = () => {
 const BackgroundEffects = () => (
   <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
     <div className="absolute inset-0 grid-pattern" />
-    <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-black/[0.03] blur-[150px]" />
-    <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-black/[0.02] blur-[150px]" />
+    <div className="hidden md:block absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-black/[0.03] blur-[150px]" />
+    <div className="hidden md:block absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-black/[0.02] blur-[150px]" />
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-black/[0.06] to-transparent" />
   </div>
 );
@@ -89,12 +89,12 @@ const Hero = () => {
   const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
   return (
-    <section className="relative pt-32 pb-20 px-6 min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white">
+    <section className="relative pt-20 pb-14 px-5 md:pt-28 md:pb-16 md:px-8 lg:pt-32 lg:pb-20 min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden z-0">
         <motion.div
           animate={{ opacity: [0.04, 0.1, 0.04], scale: [1, 1.05, 1] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-black/[0.05] blur-[130px] rounded-full"
+          className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-black/[0.05] blur-[130px] rounded-full"
         />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-screen bg-gradient-to-b from-black/20 via-black/5 to-transparent" />
       </div>
@@ -110,28 +110,28 @@ const Hero = () => {
             {t.badge}
           </div>
 
-          <h1 className="text-5xl md:text-6xl font-display font-bold leading-[1.05] mb-6 text-black">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.08] mb-5 md:mb-6 text-black">
             {t.h1[0]}<br />
             {t.h1[1]}<br />
             <span className="text-black/30">{t.h1dim[0]}<br />{t.h1dim[1]}</span>
           </h1>
 
-          <p className="text-lg text-black/55 max-w-lg mb-10 leading-relaxed">
+          <p className="text-sm md:text-base lg:text-lg text-black/55 max-w-lg mb-8 md:mb-10 leading-relaxed">
             {t.sub}
           </p>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-3 md:gap-4">
             <button
               data-cal-namespace="15min"
               data-cal-link="alioune-kane-1qdw6v/15min"
               data-cal-config='{"layout":"month_view"}'
-              className="bg-black text-white px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-black/80 transition-all shadow-sm cursor-pointer"
+              className="bg-black text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-black/80 transition-all shadow-sm cursor-pointer text-sm md:text-base"
             >
-              {t.cta1} <ArrowRight className="w-5 h-5" />
+              {t.cta1} <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
             </button>
             <a
               href="#services"
-              className="border border-black/15 text-black px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-black/5 transition-all"
+              className="border border-black/15 text-black px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-black/5 transition-all text-sm md:text-base"
             >
               {t.cta2}
             </a>
@@ -149,7 +149,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="relative flex items-center justify-center"
+          className="hidden lg:flex items-center justify-center"
         >
           <svg className="w-full" viewBox="0 0 500 255" preserveAspectRatio="xMidYMid meet">
             <defs>
@@ -252,14 +252,14 @@ const Hero = () => {
 };
 
 const SectionHeader = ({ title, subtitle, badge }: { title: string; subtitle: string; badge?: string }) => (
-  <div className="text-center mb-16">
+  <div className="text-center mb-10 md:mb-12 lg:mb-16">
     {badge && (
-      <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+      <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 md:mb-4">
         {badge}
       </div>
     )}
-    <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-black">{title}</h2>
-    <p className="text-black/40 max-w-2xl mx-auto">{subtitle}</p>
+    <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold mb-3 md:mb-4 text-black">{title}</h2>
+    <p className="text-sm md:text-base text-black/40 max-w-2xl mx-auto">{subtitle}</p>
   </div>
 );
 
@@ -275,14 +275,14 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-24 px-8 bg-white">
+    <section id="services" className="py-14 px-5 md:py-20 md:px-8 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-10 md:mb-12 lg:mb-16">
           <div>
-            <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+            <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 md:mb-4">
               {t.badge}
             </div>
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold text-black leading-tight">
               {t.heading[0]}<br />{t.heading[1]}
             </h2>
           </div>
@@ -387,11 +387,11 @@ const HowItWorks = () => {
   const t = translations[lang].howItWorks;
 
   return (
-    <section id="how-it-works" className="py-24 px-6 bg-[#F7F7F5] border-y border-black/[0.06]">
+    <section id="how-it-works" className="py-14 px-5 md:py-20 md:px-8 lg:py-24 bg-[#F7F7F5] border-y border-black/[0.06]">
       <div className="max-w-7xl mx-auto">
         <SectionHeader badge={t.badge} title={t.heading} subtitle={t.sub} />
 
-        <div className="grid md:grid-cols-4 gap-8 relative">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 relative">
           <div className="hidden md:block absolute top-8 left-0 w-full h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
 
           {t.steps.map((step, i) => (
@@ -422,16 +422,16 @@ const WhyUs = () => {
   ];
 
   return (
-    <section id="why-us" className="py-24 px-6 bg-white">
+    <section id="why-us" className="py-14 px-5 md:py-20 md:px-8 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="border border-black/[0.07] rounded-[40px] p-12 relative overflow-hidden bg-[#F7F7F5]">
+        <div className="border border-black/[0.07] rounded-2xl md:rounded-[32px] lg:rounded-[40px] p-5 md:p-8 lg:p-12 relative overflow-hidden bg-[#F7F7F5]">
           <div className="absolute inset-0 grid-pattern opacity-60" />
           <div className="relative z-10">
-            <div className="text-center mb-16">
-              <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+            <div className="text-center mb-8 md:mb-12 lg:mb-16">
+              <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 md:mb-4">
                 {t.badge}
               </div>
-              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-black">
+              <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold mb-4 md:mb-6 text-black">
                 {t.heading[0]}<br />{t.heading[1]}
               </h2>
               <p className="text-black/40 max-w-2xl mx-auto">
@@ -473,14 +473,14 @@ const CaseStudies = () => {
   ];
 
   return (
-    <section id="work" className="py-24 px-8 bg-[#F7F7F5]">
+    <section id="work" className="py-14 px-5 md:py-20 md:px-8 lg:py-24 bg-[#F7F7F5]">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-10 md:mb-12 lg:mb-16">
           <div>
-            <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+            <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 md:mb-4">
               {t.badge}
             </div>
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold text-black leading-tight">
               {t.heading}
             </h2>
           </div>
@@ -489,11 +489,11 @@ const CaseStudies = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {t.items.map((c, i) => (
             <motion.div
               key={i}
-              className="bg-white border border-black/[0.08] rounded-3xl p-8 hover:border-black/20 hover:shadow-sm transition-all"
+              className="bg-white border border-black/[0.08] rounded-3xl p-5 md:p-6 lg:p-8 hover:border-black/20 hover:shadow-sm transition-all"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
@@ -546,7 +546,7 @@ const About = () => {
   const t = translations[lang].about;
 
   return (
-    <section id="about" className="py-24 px-6 bg-white border-y border-black/[0.06]">
+    <section id="about" className="py-14 px-5 md:py-20 md:px-8 lg:py-24 bg-white border-y border-black/[0.06]">
       <div className="max-w-5xl mx-auto">
 
         <motion.div
@@ -554,12 +554,12 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-8 md:mb-10 lg:mb-14"
         >
-          <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/[0.08] text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 mb-4">
+          <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/[0.08] text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 mb-3 md:mb-4">
             {t.badge}
           </div>
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight">
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold text-black leading-tight">
             {t.headline}
           </h2>
         </motion.div>
@@ -661,14 +661,14 @@ const Testimonials = () => {
   const t = translations[lang].testimonials;
 
   return (
-    <section className="py-24 px-6 bg-white">
+    <section className="py-14 px-5 md:py-20 md:px-8 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto">
         <SectionHeader badge={t.badge} title={t.heading} subtitle={t.sub} />
 
         <div className="max-w-2xl mx-auto">
-          <div className="border border-black/[0.08] bg-[#F7F7F5] rounded-3xl p-10 relative">
-            <Quote className="w-8 h-8 text-black/10 mb-6" />
-            <p className="text-xl text-black font-medium leading-relaxed mb-8">
+          <div className="border border-black/[0.08] bg-[#F7F7F5] rounded-3xl p-6 md:p-8 lg:p-10 relative">
+            <Quote className="w-6 h-6 md:w-8 md:h-8 text-black/10 mb-4 md:mb-6" />
+            <p className="text-base md:text-lg lg:text-xl text-black font-medium leading-relaxed mb-6 md:mb-8">
               "{t.quote}"
             </p>
             <div className="flex items-center gap-3">
@@ -704,7 +704,7 @@ const FAQ = () => {
   const t = translations[lang].faq;
 
   return (
-    <section id="faq" className="py-24 px-6 bg-[#F7F7F5]">
+    <section id="faq" className="py-14 px-5 md:py-20 md:px-8 lg:py-24 bg-[#F7F7F5]">
       <div className="max-w-3xl mx-auto">
         <SectionHeader badge={t.badge} title={t.heading} subtitle={t.sub} />
 
@@ -713,9 +713,9 @@ const FAQ = () => {
             <div key={i} className="bg-white rounded-2xl overflow-hidden border border-black/[0.07]">
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-black/[0.02] transition-colors"
+                className="w-full px-5 py-4 md:px-7 md:py-5 lg:px-8 lg:py-6 flex items-center justify-between text-left hover:bg-black/[0.02] transition-colors"
               >
-                <span className="font-bold text-black pr-4">{faq.q}</span>
+                <span className="font-bold text-black text-sm md:text-base pr-4">{faq.q}</span>
                 <Plus className={`w-5 h-5 text-black transition-transform duration-300 shrink-0 ${openIndex === i ? 'rotate-45' : ''}`} />
               </button>
               <AnimatePresence>
@@ -726,7 +726,7 @@ const FAQ = () => {
                     exit={{ height: 0, opacity: 0 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-8 pb-6 text-black/50 text-sm leading-relaxed">{faq.a}</div>
+                    <div className="px-5 pb-4 md:px-7 md:pb-5 lg:px-8 lg:pb-6 text-black/50 text-sm leading-relaxed">{faq.a}</div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -755,7 +755,7 @@ const CTA = () => {
   const t = translations[lang].cta;
 
   return (
-    <section id="book" className="py-24 px-6 bg-black text-white relative overflow-hidden">
+    <section id="book" className="py-14 px-5 md:py-20 md:px-8 lg:py-24 bg-black text-white relative overflow-hidden">
       <div
         className="absolute inset-0 opacity-20"
         style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0)", backgroundSize: "40px 40px" }}
@@ -767,17 +767,17 @@ const CTA = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-8 md:mb-10 lg:mb-14"
         >
-          <h2 className="text-5xl md:text-6xl font-display font-bold mb-6 text-white">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold mb-4 md:mb-6 text-white">
             {t.heading[0]}<br />{t.heading[1]}
           </h2>
-          <p className="text-white/50 text-lg max-w-xl mx-auto">
+          <p className="text-white/50 text-sm md:text-base lg:text-lg max-w-xl mx-auto">
             {t.sub}
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-4 mb-12">
+        <div className="grid md:grid-cols-3 gap-3 md:gap-4 mb-8 md:mb-12">
           {t.steps.map((item) => (
             <div key={item.num} className="border border-white/[0.08] rounded-2xl p-6 bg-white/[0.03]">
               <div className="text-xs font-bold text-white/25 mb-3">{item.num}</div>
@@ -790,7 +790,7 @@ const CTA = () => {
           <Cal
             namespace="15min"
             calLink="alioune-kane-1qdw6v/15min"
-            style={{ width: "100%", height: "600px", overflow: "scroll" }}
+            style={{ width: "100%", height: "clamp(420px, 75vw, 600px)", overflow: "scroll" }}
             config={{ layout: "month_view" }}
           />
         </div>
@@ -805,16 +805,16 @@ const Footer = () => {
   const t = translations[lang].footer;
 
   return (
-    <footer className="py-12 px-6 bg-black text-white border-t border-white/[0.06]">
+    <footer className="py-10 px-5 md:py-12 md:px-8 bg-black text-white border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
-          <div className="col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+          <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-6">
               <div className="w-7 h-7 bg-white flex items-center justify-center">
                 <Zap className="text-black w-4 h-4" />
               </div>
               <span className="font-display font-bold text-xl tracking-tight text-white">
-                Click<span className="font-black">rise</span>
+                Clickrise
               </span>
             </div>
             <p className="text-white/35 max-w-sm text-sm leading-relaxed mb-4">
