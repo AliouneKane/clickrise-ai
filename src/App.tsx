@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import { Navbar1 } from './components/ui/navbar-1';
 import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
@@ -57,7 +57,7 @@ const InfiniteMarquee = () => {
         animate={{ x: [0, -1200] }}
         transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
       >
-        {[...tools, ...tools, ...tools].map((tool, i) => (
+        {[...tools, ...tools].map((tool, i) => (
           <div
             key={i}
             className="flex items-center gap-3 text-black/30 hover:text-black/70 transition-colors cursor-default"
@@ -753,9 +753,22 @@ const FAQ = () => {
 const CTA = () => {
   const { lang } = useLang();
   const t = translations[lang].cta;
+  const sectionRef = useRef<HTMLElement>(null);
+  const [showCal, setShowCal] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setShowCal(true); observer.disconnect(); } },
+      { rootMargin: '300px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section id="book" className="py-24 px-6 bg-black text-white relative overflow-hidden">
+    <section ref={sectionRef} id="book" className="py-24 px-6 bg-black text-white relative overflow-hidden">
       <div
         className="absolute inset-0 opacity-20"
         style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0)", backgroundSize: "40px 40px" }}
@@ -786,13 +799,17 @@ const CTA = () => {
           ))}
         </div>
 
-        <div className="rounded-2xl overflow-hidden bg-white">
-          <Cal
-            namespace="15min"
-            calLink="alioune-kane-1qdw6v/15min"
-            style={{ width: "100%", height: "600px", overflow: "scroll" }}
-            config={{ layout: "month_view" }}
-          />
+        <div className="rounded-2xl overflow-hidden bg-white" style={{ minHeight: "600px" }}>
+          {showCal ? (
+            <Cal
+              namespace="15min"
+              calLink="alioune-kane-1qdw6v/15min"
+              style={{ width: "100%", height: "600px", overflow: "scroll" }}
+              config={{ layout: "month_view" }}
+            />
+          ) : (
+            <div style={{ width: "100%", height: "600px" }} className="bg-gray-100 animate-pulse rounded-2xl" />
+          )}
         </div>
         <p className="text-center text-white/20 text-xs mt-4">{t.fine}</p>
       </div>
@@ -866,6 +883,18 @@ export default function App() {
       const cal = await getCalApi({ namespace: "15min" });
       cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
     })();
+
+    const loadElevenLabs = () => {
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
+      script.async = true;
+      document.body.appendChild(script);
+    };
+    if ('requestIdleCallback' in window) {
+      (window as Window & typeof globalThis & { requestIdleCallback: (cb: () => void) => void }).requestIdleCallback(loadElevenLabs);
+    } else {
+      setTimeout(loadElevenLabs, 2000);
+    }
   }, []);
 
   return (
