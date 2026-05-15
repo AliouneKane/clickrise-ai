@@ -580,7 +580,6 @@ const About = () => {
                   src="/Alioune.png"
                   alt="Alioune Abdou Salam Kane"
                   className="w-full h-full object-cover object-top"
-                  loading="lazy"
                 />
               </div>
               {/* Name + role */}
