@@ -478,76 +478,214 @@ const CaseStudies = () => {
   const { lang } = useLang();
   const t = translations[lang].cases;
 
-  const icons = [
-    <Activity className="w-5 h-5" />,
-    <Users className="w-5 h-5" />,
-    <Mail className="w-5 h-5" />,
+  const featured = t.items[2]; // Cold Outbound — most complete, live
+
+  const featuredMetrics = lang === 'en'
+    ? [
+        { value: '100%', label: 'Automated' },
+        { value: '0h',   label: 'Manual work/cycle' },
+        { value: 'Live', label: 'In production' },
+      ]
+    : [
+        { value: '100%', label: 'Automatisé' },
+        { value: '0h',   label: 'Travail manuel/cycle' },
+        { value: 'Actif', label: 'En production' },
+      ];
+
+  const globalMetrics = lang === 'en'
+    ? [
+        { value: '3',    label: 'Systems built' },
+        { value: '100%', label: 'Automated workflows' },
+        { value: '0h',   label: 'Manual work once live' },
+        { value: '2+',   label: 'Live in production' },
+      ]
+    : [
+        { value: '3',    label: 'Systèmes construits' },
+        { value: '100%', label: 'Workflows automatisés' },
+        { value: '0h',   label: 'Travail manuel une fois livré' },
+        { value: '2+',   label: 'En production' },
+      ];
+
+  const cardIcons = [
+    <Activity className="w-5 h-5 text-white/60" />,
+    <Users    className="w-5 h-5 text-white/60" />,
+    <Mail     className="w-5 h-5 text-white/60" />,
   ];
+
+  const pipelineSteps = lang === 'en'
+    ? [
+        { step: 'Google Maps', status: '142 leads scraped',         active: false },
+        { step: 'Enrichment',  status: 'Contact data added',        active: false },
+        { step: 'Sequences',   status: 'Emails personalized',       active: false },
+        { step: 'Send',        status: 'Running automatically',     active: true  },
+      ]
+    : [
+        { step: 'Google Maps',     status: '142 leads récupérés',         active: false },
+        { step: 'Enrichissement',  status: 'Données de contact ajoutées', active: false },
+        { step: 'Séquences',       status: 'Emails personnalisés',        active: false },
+        { step: 'Envoi',           status: 'En cours automatiquement',    active: true  },
+      ];
 
   return (
     <section id="work" className="py-24 px-8 bg-[#F7F7F5]">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div>
-            <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
-              {t.badge}
-            </div>
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight">
+      <div className="max-w-6xl mx-auto">
+
+        {/* Header */}
+        <div className="pb-12">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 mb-3">
+            {t.badge}
+          </p>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight max-w-xl">
               {t.heading}
             </h2>
+            <p className="text-black/40 max-w-xs md:text-right text-sm leading-relaxed">
+              {t.sub}
+            </p>
           </div>
-          <p className="text-black/40 max-w-xs md:text-right text-sm leading-relaxed">
-            {t.sub}
-          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-5">
-          {t.items.map((c, i) => (
-            <motion.div
-              key={i}
-              className="bg-white border border-black/[0.08] rounded-3xl p-8 hover:border-black/20 hover:shadow-sm transition-all"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex items-start justify-between mb-6">
-                <div className="w-11 h-11 border border-black/[0.08] rounded-xl flex items-center justify-center text-black">
-                  {icons[i]}
+        {/* Featured case study */}
+        <div className="mb-6 overflow-hidden rounded-2xl border border-black/[0.08] bg-white">
+          <div className="grid lg:grid-cols-2">
+            {/* Visual side */}
+            <div className="relative overflow-hidden bg-[#0A0A0F] min-h-[300px] lg:min-h-0">
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-8 gap-4">
+                <div className="w-12 h-12 bg-white/10 border border-white/[0.12] rounded-xl flex items-center justify-center">
+                  <Mail className="w-6 h-6 text-white/70" />
                 </div>
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${c.status === 'live' ? 'bg-black text-white' : 'bg-black/5 text-black/50 border border-black/10'}`}>
-                  {c.statusDisplay}
+                <div className="w-full max-w-[260px] space-y-2">
+                  {pipelineSteps.map((row, i) => (
+                    <div key={i} className="flex items-center justify-between bg-white/[0.05] border border-white/[0.07] rounded-lg px-3 py-2">
+                      <span className="text-white/40 text-[10px] uppercase tracking-wider">{row.step}</span>
+                      <span className="text-white/55 text-[10px] flex items-center gap-1.5">
+                        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${row.active ? 'bg-white/60 animate-pulse' : 'bg-white/25'}`} />
+                        {row.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex flex-wrap gap-1.5 justify-center mt-1">
+                  {featured.stack.map((tech) => (
+                    <span key={tech} className="text-[10px] border border-white/[0.1] px-2.5 py-1 rounded-full text-white/30">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Text side */}
+            <div className="flex flex-col justify-center gap-5 p-8 lg:p-12">
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-black/40">
+                <span className="inline-flex items-center rounded-full bg-black/[0.06] border border-black/[0.08] px-3 py-1 text-black/55">
+                  {lang === 'en' ? 'Featured' : 'À la une'}
                 </span>
+                <span>{featured.sector}</span>
               </div>
 
-              <div className="text-[10px] text-black/35 uppercase tracking-widest mb-1">{c.sector}</div>
-              <h3 className="text-xl font-display font-bold text-black mb-6">{c.title}</h3>
+              <h2 className="text-2xl font-display font-bold leading-tight text-black md:text-3xl">
+                {featured.title}
+              </h2>
 
               <div className="space-y-4">
-                {([
-                  { label: lang === 'fr' ? 'Problème'  : 'Problem',  text: c.problem,  bold: false },
-                  { label: lang === 'fr' ? 'Solution'  : 'Solution', text: c.solution, bold: false },
-                  { label: lang === 'fr' ? 'Résultat'  : 'Result',   text: c.result,   bold: true  },
-                ] as const).map((block) => (
-                  <div key={block.label}>
-                    <div className="text-[10px] font-bold uppercase tracking-widest text-black/30 mb-1">{block.label}</div>
-                    <p className={`text-sm leading-relaxed ${block.bold ? 'text-black font-medium' : 'text-black/50'}`}>
-                      {block.text}
-                    </p>
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-black/25 mb-1">
+                    {lang === 'en' ? 'Problem' : 'Problème'}
                   </div>
-                ))}
+                  <p className="text-sm leading-relaxed text-black/45">{featured.problem}</p>
+                </div>
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-black/25 mb-1">
+                    {lang === 'en' ? 'Result' : 'Résultat'}
+                  </div>
+                  <p className="text-sm leading-relaxed text-black font-medium">{featured.result}</p>
+                </div>
               </div>
 
-              <div className="flex flex-wrap gap-2 mt-6">
-                {c.stack.map((tech) => (
-                  <span key={tech} className="text-[10px] bg-black/5 border border-black/[0.07] px-2.5 py-1 rounded-full text-black/50">
-                    {tech}
-                  </span>
+              <dl className="grid grid-cols-3 gap-4 border-t border-black/[0.07] pt-5">
+                {featuredMetrics.map((m) => (
+                  <div key={m.label} className="flex flex-col gap-1">
+                    <dt className="order-2 text-[10px] text-black/35">{m.label}</dt>
+                    <dd className="order-1 text-2xl font-display font-bold text-black md:text-3xl">{m.value}</dd>
+                  </div>
                 ))}
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        {/* Grid */}
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {t.items.map((study, i) => (
+            <motion.div
+              key={i}
+              className="group flex flex-col overflow-hidden rounded-2xl border border-black/[0.08] bg-white hover:border-black/20 hover:shadow-sm transition-all"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08 }}
+              viewport={{ once: true }}
+            >
+              {/* Visual area */}
+              <div className="relative aspect-[16/10] overflow-hidden bg-[#0A0A0F]">
+                <span className="absolute left-3 top-3 inline-flex items-center rounded-full border border-white/[0.1] bg-white/[0.06] px-2.5 py-1 text-[10px] font-medium text-white/40">
+                  {study.sector}
+                </span>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="w-10 h-10 bg-white/10 border border-white/[0.1] rounded-xl flex items-center justify-center mb-3">
+                    {cardIcons[i]}
+                  </div>
+                  <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${study.status === 'live' ? 'bg-white/90 text-black' : 'bg-white/10 text-white/45 border border-white/[0.12]'}`}>
+                    {study.statusDisplay}
+                  </span>
+                </div>
+                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#0A0A0F] to-transparent" />
+              </div>
+
+              {/* Content */}
+              <div className="flex flex-1 flex-col gap-3 p-5">
+                <h3 className="text-base font-display font-bold leading-snug text-black">
+                  {study.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-black/45">
+                  {study.result}
+                </p>
+                <div className="flex flex-wrap gap-1.5 mt-auto pt-3 border-t border-black/[0.06]">
+                  {study.stack.map((tech) => (
+                    <span key={tech} className="text-[10px] bg-black/[0.04] border border-black/[0.06] px-2 py-0.5 rounded-full text-black/40">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
+
+        {/* Metrics band */}
+        <div className="mt-12 rounded-2xl border border-black/[0.07] bg-white p-10 md:p-12">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-display font-bold text-black md:text-3xl">
+              {lang === 'en' ? 'Outcomes that move the needle' : 'Des résultats qui font la différence'}
+            </h2>
+            <p className="mt-2 text-sm text-black/40 leading-relaxed max-w-md mx-auto">
+              {lang === 'en'
+                ? 'Every system runs automatically — once deployed, zero manual hours required.'
+                : 'Chaque système tourne automatiquement — une fois déployé, zéro heure manuelle requise.'}
+            </p>
+          </div>
+          <dl className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
+            {globalMetrics.map((m) => (
+              <div key={m.label} className="flex flex-col items-center gap-2 text-center">
+                <dd className="text-4xl font-display font-bold tracking-tight text-black md:text-5xl">
+                  {m.value}
+                </dd>
+                <dt className="text-sm text-black/40">{m.label}</dt>
+              </div>
+            ))}
+          </dl>
+        </div>
+
       </div>
     </section>
   );
