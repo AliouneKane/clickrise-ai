@@ -147,7 +147,7 @@ Define a strong, intentional palette. Suggestion:
 
 ```env
 NEXT_PUBLIC_CAL_USERNAME=your-cal-username
-NEXT_PUBLIC_SITE_URL=https://clickrise.ai
+NEXT_PUBLIC_SITE_URL=https://clickriseai.com
 ```
 
 ---
