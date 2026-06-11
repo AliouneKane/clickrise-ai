@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
-    "postbuild": "react-snap"
+    "postbuild": "react-snap || true"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
