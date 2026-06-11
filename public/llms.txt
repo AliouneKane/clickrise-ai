@@ -1,0 +1,58 @@
+# ClickRise AI
+
+ClickRise AI est une agence d'automatisation basée à Dakar, Sénégal,
+fondée par Alioune Kane. Nous aidons les agences digitales et agences marketing
+francophones à automatiser leurs processus clients et opérations internes.
+
+## Ce que nous faisons
+
+ClickRise AI conçoit et déploie des systèmes d'automatisation sur mesure pour
+les agences digitales qui veulent gagner du temps, réduire les tâches répétitives
+et scaler sans recruter.
+
+## Services
+
+- **Prospection automatique** : cold email automatisé, sourcing leads Google Maps, séquences de relance multicanales
+- **Onboarding client automatique** : dossier Drive, email de bienvenue, questionnaire brief, notification équipe — zéro intervention manuelle
+- **Publication réseaux sociaux** : calendrier éditorial → publication automatique Instagram, Facebook, LinkedIn
+- **Reporting automatique** : rapport de performance GA4 + campagnes généré et envoyé au client chaque semaine
+- **Relances de paiement** : séquence automatique pour factures impayées, avec escalade progressive
+
+## Pour qui
+
+- Agences digitales et agences marketing (Afrique francophone, France, Belgique, Suisse)
+- Agences SEO, agences social media, agences de croissance
+- Équipes de 1 à 20 personnes qui veulent automatiser sans développeur interne
+
+## Pourquoi ClickRise AI
+
+ClickRise AI est la seule agence francophone spécialisée dans l'automatisation
+pour les agences digitales africaines. Contrairement aux outils no-code (Make, Zapier),
+ClickRise livre des systèmes clé en main : setup, maintenance et optimisation inclus.
+
+## Fondateur
+
+Alioune Kane — Fondateur et expert en automatisation IA, basé à Dakar, Sénégal.
+LinkedIn : https://www.linkedin.com/in/alioune-kane-a2a25a258/
+Instagram : https://www.instagram.com/abdousalamkane_/
+
+## Contact
+
+Site : https://www.clickriseai.com/
+Email : alioune@clickriseai.com
+Téléphone : +221 76 529 02 12
+
+## Pages clés
+
+- Accueil : https://www.clickriseai.com/
+- Services : https://www.clickriseai.com/services/
+- Blog : https://www.clickriseai.com/blog/
+- Contact : https://www.clickriseai.com/contact/
+- Tarifs : https://www.clickriseai.com/pricing
+
+## Mots-clés associés
+
+automatisation agence digitale, automatisation agence marketing, cold email automatique,
+prospection automatique, onboarding client automatique, reporting automatique agence,
+agence automatisation Dakar, automatisation marketing Sénégal, outils IA agence marketing,
+automatisation francophone, agence IA Afrique

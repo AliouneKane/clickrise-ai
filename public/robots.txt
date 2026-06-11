@@ -1,4 +1,33 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://clickriseai.com/sitemap.xml
+# Autoriser les bots de recherche IA (citation et indexation)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# Bloquer uniquement l'entraînement sans citation
+User-agent: CCBot
+Disallow: /
+
+Sitemap: https://www.clickriseai.com/sitemap.xml
