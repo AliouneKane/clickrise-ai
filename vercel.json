@@ -4,6 +4,8 @@
     { "source": "/services/:path*", "destination": "/services/:path*" },
     { "source": "/contact/:path*", "destination": "/contact/:path*" },
     { "source": "/a-propos/:path*", "destination": "/a-propos/:path*" },
+    { "source": "/alternatives/:path*", "destination": "/alternatives/:path*" },
+    { "source": "/pour/:path*", "destination": "/pour/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

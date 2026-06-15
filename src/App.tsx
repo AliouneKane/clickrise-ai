@@ -401,21 +401,53 @@ const HowItWorks = () => {
   return (
     <section id="how-it-works" className="py-24 px-6 bg-[#F7F7F5] border-y border-black/[0.06]">
       <div className="max-w-7xl mx-auto">
-        <SectionHeader badge={t.badge} title={t.heading} subtitle={t.sub} />
+        <div className="grid lg:grid-cols-[2fr_3fr] gap-16 items-start">
 
-        <div className="grid md:grid-cols-4 gap-8 relative">
-          <div className="hidden md:block absolute top-8 left-0 w-full h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
-
-          {t.steps.map((step, i) => (
-            <div key={i} className="relative z-10 text-center">
-              <div className="w-16 h-16 bg-white border border-black/10 rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm relative">
-                <span className="text-black font-display font-bold text-xl">{step.number}</span>
-                <div className="absolute inset-0 rounded-full border border-black/20 animate-ping opacity-15" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-black">{step.title}</h3>
-              <p className="text-black/40 text-sm leading-relaxed">{step.desc}</p>
+          {/* Left — sticky text */}
+          <div className="lg:sticky lg:top-24">
+            <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+              {t.badge}
             </div>
-          ))}
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight mb-5">
+              {lang === 'fr' ? <>{t.steps.length} étapes.<br />Pas de détour.</> : <>{t.steps.length} steps.<br />No fluff.</>}
+            </h2>
+            <p className="text-black/40 text-sm leading-relaxed mb-8 max-w-xs">
+              {t.sub}
+            </p>
+            <a
+              href="#book"
+              className="inline-flex items-center gap-2 border border-black/15 text-black text-sm font-bold px-6 py-3 rounded-full hover:bg-black/5 transition-all"
+            >
+              {lang === 'fr' ? 'Voir comment ça marche' : 'See how it works'} <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Right — vertical timeline */}
+          <div className="relative">
+            <div className="absolute left-[19px] top-10 bottom-10 w-px bg-gradient-to-b from-black/10 via-black/10 to-transparent hidden sm:block" />
+
+            <div className="space-y-2">
+              {t.steps.map((step, i) => (
+                <motion.div
+                  key={i}
+                  className="flex gap-6 pb-8"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.4 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="shrink-0 w-10 h-10 bg-white border border-black/10 rounded-full flex items-center justify-center shadow-sm relative z-10">
+                    <span className="text-black font-display font-bold text-sm">{step.number}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-black mb-2">{step.title}</h3>
+                    <p className="text-black/40 text-sm leading-relaxed">{step.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -618,15 +650,10 @@ const CaseStudies = () => {
         {/* Grid */}
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {t.items.map((study, i) => (
-            <motion.div
-              key={i}
+            <motion.div key={i}
               className="group flex flex-col overflow-hidden rounded-2xl border border-black/[0.08] bg-white hover:border-black/20 hover:shadow-sm transition-all"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.08 }}
-              viewport={{ once: true }}
-            >
-              {/* Visual area */}
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08 }} viewport={{ once: true }}>
               <div className="relative aspect-[16/10] overflow-hidden bg-[#0A0A0F]">
                 <span className="absolute left-3 top-3 inline-flex items-center rounded-full border border-white/[0.1] bg-white/[0.06] px-2.5 py-1 text-[10px] font-medium text-white/40">
                   {study.sector}
@@ -641,15 +668,9 @@ const CaseStudies = () => {
                 </div>
                 <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#0A0A0F] to-transparent" />
               </div>
-
-              {/* Content */}
               <div className="flex flex-1 flex-col gap-3 p-5">
-                <h3 className="text-base font-display font-bold leading-snug text-black">
-                  {study.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-black/45">
-                  {study.result}
-                </p>
+                <h3 className="text-base font-display font-bold leading-snug text-black">{study.title}</h3>
+                <p className="text-sm leading-relaxed text-black/45">{study.result}</p>
                 <div className="flex flex-wrap gap-1.5 mt-auto pt-3 border-t border-black/[0.06]">
                   {study.stack.map((tech) => (
                     <span key={tech} className="text-[10px] bg-black/[0.04] border border-black/[0.06] px-2 py-0.5 rounded-full text-black/40">
@@ -810,18 +831,14 @@ const About = () => {
 const Testimonials = () => {
   const { lang } = useLang();
   const t = translations[lang].testimonials;
-
   return (
     <section className="py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         <SectionHeader badge={t.badge} title={t.heading} subtitle={t.sub} />
-
         <div className="max-w-2xl mx-auto">
           <div className="border border-black/[0.08] bg-[#F7F7F5] rounded-3xl p-10 relative">
             <Quote className="w-8 h-8 text-black/10 mb-6" />
-            <p className="text-xl text-black font-medium leading-relaxed mb-8">
-              "{t.quote}"
-            </p>
+            <p className="text-xl text-black font-medium leading-relaxed mb-8">"{t.quote}"</p>
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 bg-black/10 rounded-full flex items-center justify-center">
                 <Users className="w-4 h-4 text-black/40" />
@@ -832,14 +849,10 @@ const Testimonials = () => {
               </div>
             </div>
           </div>
-
           <div className="text-center mt-10">
-            <button
-              data-cal-namespace="15min"
-              data-cal-link="alioune-kane-1qdw6v/15min"
+            <button data-cal-namespace="15min" data-cal-link="alioune-kane-1qdw6v/15min"
               data-cal-config='{"layout":"month_view"}'
-              className="inline-flex items-center gap-2 bg-black text-white font-bold px-8 py-4 rounded-xl hover:bg-black/80 transition-colors cursor-pointer"
-            >
+              className="inline-flex items-center gap-2 bg-black text-white font-bold px-8 py-4 rounded-xl hover:bg-black/80 transition-colors cursor-pointer">
               {t.cta} <ArrowRight className="w-4 h-4" />
             </button>
           </div>
