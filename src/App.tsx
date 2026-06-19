@@ -540,9 +540,9 @@ const CaseStudies = () => {
 
   // Placeholder images — swap with real project screenshots when available
   const projectImages = [
-    'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=75&w=900&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=75&w=900&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?q=75&w=900&auto=format&fit=crop',
   ];
 
   const pipelineSteps = lang === 'en'
@@ -1064,10 +1064,17 @@ export default function App() {
   );
 
   useEffect(() => {
-    (async function () {
-      const cal = await getCalApi({ namespace: "15min" });
-      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-    })();
+    const initCal = () => {
+      (async function () {
+        const cal = await getCalApi({ namespace: "15min" });
+        cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+      })();
+    };
+    if ('requestIdleCallback' in window) {
+      (window as Window & { requestIdleCallback: (cb: () => void) => void }).requestIdleCallback(initCal);
+    } else {
+      setTimeout(initCal, 0);
+    }
 
     const loadElevenLabs = () => {
       const script = document.createElement('script');

@@ -5,9 +5,13 @@
 
    Display / Titres : Syne (400 500 600 700 800)
    Corps de texte   : DM Sans (300 400 500 600 + italic)
-   ================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
+   Le fichier @font-face est chargé via <link> dans index.html
+   (preconnect + stylesheet non bloquant) plutôt que via @import
+   ici, pour éviter une cascade réseau série qui retarde
+   l'affichage du texte sur mobile. Les polices restent
+   strictement les mêmes — seul le mécanisme de chargement change.
+   ================================================ */
 
 @theme {
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
