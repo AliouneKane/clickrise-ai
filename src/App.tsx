@@ -6,9 +6,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import { Navbar1 } from './components/ui/navbar-1';
+import { CaseStudiesGallery } from './components/ui/case-studies-gallery';
 import { m as motion, LazyMotion, domAnimation, useScroll, useTransform, MotionConfig } from 'motion/react';
 import {
-  Activity,
   ArrowRight,
   Bot,
   Code2,
@@ -538,10 +538,11 @@ const CaseStudies = () => {
         { value: '2+',   label: 'En production' },
       ];
 
-  const cardIcons = [
-    <Activity className="w-5 h-5 text-white/60" />,
-    <Users    className="w-5 h-5 text-white/60" />,
-    <Mail     className="w-5 h-5 text-white/60" />,
+  // Placeholder images — swap with real project screenshots when available
+  const projectImages = [
+    'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?q=80&w=1200&auto=format&fit=crop',
   ];
 
   const pipelineSteps = lang === 'en'
@@ -581,28 +582,78 @@ const CaseStudies = () => {
         <div className="mb-6 overflow-hidden rounded-2xl border border-black/[0.08] bg-white">
           <div className="grid lg:grid-cols-2">
             {/* Visual side */}
-            <div className="relative overflow-hidden bg-[#0A0A0F] min-h-[300px] lg:min-h-0">
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-8 gap-4">
-                <div className="w-12 h-12 bg-white/10 border border-white/[0.12] rounded-xl flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-white/70" />
-                </div>
-                <div className="w-full max-w-[260px] space-y-2">
-                  {pipelineSteps.map((row, i) => (
-                    <div key={i} className="flex items-center justify-between bg-white/[0.05] border border-white/[0.07] rounded-lg px-3 py-2">
-                      <span className="text-white/40 text-[10px] uppercase tracking-wider">{row.step}</span>
-                      <span className="text-white/55 text-[10px] flex items-center gap-1.5">
-                        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${row.active ? 'bg-white/60 animate-pulse' : 'bg-white/25'}`} />
-                        {row.status}
-                      </span>
+            <div className="relative overflow-hidden bg-gradient-to-br from-[#0A0A0F] via-[#0E0E14] to-[#16161d] min-h-[420px] lg:min-h-0">
+              <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:22px_22px] opacity-40 pointer-events-none" />
+              <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-white/[0.07] blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-20 -right-20 w-72 h-72 rounded-full bg-white/[0.05] blur-3xl pointer-events-none" />
+
+              {/* Live badge */}
+              <div className="absolute top-6 right-6 inline-flex items-center gap-1.5 rounded-full border border-white/[0.1] bg-white/[0.04] backdrop-blur-sm px-3 py-1.5">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                </span>
+                <span className="text-[10px] font-medium uppercase tracking-wider text-white/50">
+                  {lang === 'fr' ? 'En direct' : 'Live'}
+                </span>
+              </div>
+
+              <div className="relative h-full flex flex-col items-center justify-center gap-6 p-8">
+                {/* Window card */}
+                <div className="w-full max-w-[320px] rounded-2xl border border-white/[0.1] bg-white/[0.04] backdrop-blur-sm shadow-[0_24px_70px_-20px_rgba(0,0,0,0.8)] overflow-hidden">
+                  <div className="flex items-center gap-1.5 px-4 py-3 border-b border-white/[0.07] bg-white/[0.02]">
+                    <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
+                    <span className="ml-auto text-[9px] uppercase tracking-wider text-white/30">
+                      {lang === 'fr' ? 'Flux automatisé' : 'Automation flow'}
+                    </span>
+                  </div>
+
+                  <div className="p-6">
+                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center mb-6 shadow-[0_8px_20px_-6px_rgba(255,255,255,0.4)]">
+                      <Mail className="w-4.5 h-4.5 text-black" />
                     </div>
-                  ))}
+
+                    <div>
+                      {pipelineSteps.map((row, i) => (
+                        <div key={i} className="relative flex items-start gap-3.5 pb-6 last:pb-0">
+                          {i < pipelineSteps.length - 1 && (
+                            <span className="absolute left-[7px] top-4 bottom-0 w-px bg-white/15" />
+                          )}
+                          <span
+                            className={`relative z-10 mt-0.5 w-[15px] h-[15px] rounded-full border-2 flex items-center justify-center shrink-0 ${
+                              row.active ? 'border-white bg-white' : 'border-white/25 bg-[#0E0E14]'
+                            }`}
+                          >
+                            {row.active && <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />}
+                          </span>
+                          <div className="flex flex-col gap-0.5">
+                            <span className="text-white/90 text-xs font-semibold">{row.step}</span>
+                            <span className="text-white/45 text-[11px]">{row.status}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-1.5 justify-center mt-1">
+
+                <div className="flex flex-wrap gap-1.5 justify-center max-w-[320px]">
                   {featured.stack.map((tech) => (
-                    <span key={tech} className="text-[10px] border border-white/[0.1] px-2.5 py-1 rounded-full text-white/30">
+                    <span key={tech} className="text-[10px] border border-white/[0.1] bg-white/[0.04] px-2.5 py-1 rounded-full text-white/45">
                       {tech}
                     </span>
                   ))}
+                </div>
+
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2">
+                  <span className="relative flex h-1.5 w-1.5 shrink-0">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/40" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white/60" />
+                  </span>
+                  <span className="text-[11px] text-white/40">
+                    {lang === 'fr' ? 'Nouveau lead toutes les 4 minutes' : 'New lead every 4 minutes'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -647,41 +698,16 @@ const CaseStudies = () => {
           </div>
         </div>
 
-        {/* Grid */}
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {t.items.map((study, i) => (
-            <motion.div key={i}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-black/[0.08] bg-white hover:border-black/20 hover:shadow-sm transition-all"
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.08 }} viewport={{ once: true }}>
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#0A0A0F]">
-                <span className="absolute left-3 top-3 inline-flex items-center rounded-full border border-white/[0.1] bg-white/[0.06] px-2.5 py-1 text-[10px] font-medium text-white/40">
-                  {study.sector}
-                </span>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="w-10 h-10 bg-white/10 border border-white/[0.1] rounded-xl flex items-center justify-center mb-3">
-                    {cardIcons[i]}
-                  </div>
-                  <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${study.status === 'live' ? 'bg-white/90 text-black' : 'bg-white/10 text-white/45 border border-white/[0.12]'}`}>
-                    {study.statusDisplay}
-                  </span>
-                </div>
-                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#0A0A0F] to-transparent" />
-              </div>
-              <div className="flex flex-1 flex-col gap-3 p-5">
-                <h3 className="text-base font-display font-bold leading-snug text-black">{study.title}</h3>
-                <p className="text-sm leading-relaxed text-black/45">{study.result}</p>
-                <div className="flex flex-wrap gap-1.5 mt-auto pt-3 border-t border-black/[0.06]">
-                  {study.stack.map((tech) => (
-                    <span key={tech} className="text-[10px] bg-black/[0.04] border border-black/[0.06] px-2 py-0.5 rounded-full text-black/40">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {/* Gallery */}
+        <CaseStudiesGallery
+          items={t.items.map((study, i) => ({
+            title: study.title,
+            description: `${study.problem} ${study.result}`,
+            image: projectImages[i],
+            ctaLabel: lang === 'fr' ? 'Voir comment ça marche' : 'See how it works',
+            onCtaClick: () => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' }),
+          }))}
+        />
 
         {/* Metrics band */}
         <div className="mt-12 rounded-2xl border border-black/[0.07] bg-white p-10 md:p-12">

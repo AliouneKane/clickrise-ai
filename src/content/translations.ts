@@ -165,10 +165,10 @@ export const translations = {
       cta: "Parlons",
     },
     hero: {
-      badge: "Mettre les entreprises à l'avant-garde du possible",
+      badge: "Automatisation IA · Problème d'abord · Résultats mesurables",
       h1:    ["Votre business,", "propulsé par l'IA."],
       h1dim: ["Moins de temps perdu.", "Plus d'argent gagné."],
-      sub:   "Clickrise AI aide les PME à diagnostiquer leurs blocages et à construire des solutions IA sur mesure qui résolvent de vrais problèmes, pas juste ajouter des outils.",
+      sub:   "On commence par comprendre où votre équipe perd du temps. Ensuite on construit ce qui règle le problème — pas une app de plus que personne n'utilise.",
       cta1:  "Réserver votre appel découverte gratuit",
       cta2:  "Voir comment ça marche",
       tagline: "Remote-first · Disponible partout dans le monde · Approche problème d'abord",
@@ -192,7 +192,7 @@ export const translations = {
       heading: "Du premier appel aux vrais résultats.",
       sub:     "Pas de pitch, pas de pression. Un processus clair d'un diagnostic honnête à un système qui fonctionne vraiment.",
       steps: [
-        { number: "01", title: "Appel Découverte Gratuit",      desc: "On écoute vos opérations, on identifie les blocages, et on vous dit honnêtement si et comment l'IA peut aider votre business." },
+        { number: "01", title: "Appel Découverte Gratuit",      desc: "On écoute comment votre business tourne, on repère ce qui freine votre équipe, et on vous dit franchement si on peut aider — et comment." },
         { number: "02", title: "Diagnostic & Plan",             desc: "On cartographie votre problème spécifique et on propose la bonne solution, périmètre clair, délai, prix fixe." },
         { number: "03", title: "Construction & Déploiement",   desc: "On construit, on teste, on livre. Vous avez des mises à jour régulières et un produit fonctionnel, pas un deck plein de promesses." },
         { number: "04", title: "Résultats",                    desc: "On reste jusqu'à ce que ça livre. Les premiers clients ont notre attention totale jusqu'à ce que les résultats soient atteints." },
@@ -201,7 +201,7 @@ export const translations = {
     whyUs: {
       badge:   "Pourquoi Clickrise AI",
       heading: ["L'IA n'est utile que si elle résout", "un vrai problème."],
-      body:    "Quand l'IA a commencé à transformer ce qu'il est possible de construire, une opportunité est devenue évidente : aider les PME du monde entier à arrêter de perdre du temps sur des tâches répétitives, et à commencer à gagner de l'argent grâce à des systèmes intelligents conçus autour de leur façon de travailler.",
+      body:    "La plupart des PME perdent 10 à 20h par semaine sur des tâches que l'IA peut gérer en continu. On identifie lesquelles dans votre business, et on construit les systèmes qui s'en chargent — adaptés à votre façon de travailler, pas à un template générique.",
       reasons: [
         { title: "Problème d'abord, pas outil d'abord",              desc: "On ne vend pas des automatisations. On diagnostique des problèmes business et on construit la bonne solution pour votre situation spécifique." },
         { title: "Profondeur technique + compréhension business",    desc: "Formation en Data Science & IA rencontre la vraie pensée business. On parle couramment les deux langues." },
@@ -264,7 +264,7 @@ export const translations = {
     },
     cta: {
       heading: ["Parlons de", "votre business."],
-      sub:     "Réservez un appel découverte gratuit de 15–20 min. Pas de pitch, pas de pression, juste une conversation honnête sur comment l'IA peut vous faire gagner du temps ou de l'argent.",
+      sub:     "15 minutes. On écoute comment votre business fonctionne, on repère où vous perdez du temps ou de l'argent, et on vous dit franchement si on peut aider — et comment.",
       steps: [
         { num: "01", text: "On écoute vos opérations actuelles et on identifie les blocages" },
         { num: "02", text: "On vous dit honnêtement si et comment l'IA peut aider votre business" },
@@ -294,7 +294,7 @@ export const translations = {
       origin:    "Sénégal, disponible dans le monde entier",
       headline:  "Construit par quelqu'un qui pense business et code comme un ingénieur.",
       body: [
-        "Je suis étudiant en ingénierie statistique et économique, spécialisé en Data Science & IA, et j'ai créé Clickrise AI parce que j'ai toujours vu le même problème : des entreprises noyées dans le travail répétitif, pendant que les outils IA restaient inutilisés ou mal compris.",
+        "Je suis en formation Data Science & IA, et j'ai lancé Clickrise AI après avoir observé le même problème en boucle : des équipes qui passent leurs journées sur des tâches répétitives pendant que l'IA — capable de les gérer — reste mal configurée ou inutilisée.",
         "Ma conviction est simple : l'IA n'est pas un outil qu'on installe. C'est une solution qu'on conçoit après avoir compris un vrai problème business. C'est pourquoi chaque mission commence par un diagnostic, pas une démo.",
         "En tant qu'agence en démarrage, chaque premier client bénéficie de mon attention totale et personnalisée jusqu'à l'obtention des résultats attendus. Pas de délégation à des juniors, pas de templates.",
       ],
