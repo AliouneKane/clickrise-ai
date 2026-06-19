@@ -466,35 +466,35 @@ const WhyUs = () => {
   ];
 
   return (
-    <section id="why-us" className="py-24 px-6 bg-white">
+    <section id="why-us" className="py-16 px-4 md:py-24 md:px-6 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="border border-black/[0.07] rounded-[40px] p-12 relative overflow-hidden bg-[#F7F7F5]">
+        <div className="border border-black/[0.07] rounded-[28px] md:rounded-[40px] p-5 sm:p-8 md:p-12 relative overflow-hidden bg-[#F7F7F5]">
           <div className="absolute inset-0 grid-pattern opacity-60" />
           <div className="relative z-10">
-            <div className="text-center mb-16">
+            <div className="text-center mb-10 md:mb-16">
               <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
                 {t.badge}
               </div>
-              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-black">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 md:mb-6 text-black leading-[1.1]">
                 {t.heading[0]}<br />{t.heading[1]}
               </h2>
-              <p className="text-black/40 max-w-2xl mx-auto">
+              <p className="text-black/50 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
                 {t.body}
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-5">
+            <div className="grid sm:grid-cols-2 gap-3 sm:gap-5">
               {t.reasons.map((r, i) => (
                 <div
                   key={i}
-                  className="flex gap-4 p-6 bg-white rounded-2xl border border-black/[0.07] hover:border-black/15 hover:shadow-sm transition-all"
+                  className="flex flex-col gap-3.5 p-5 sm:p-6 bg-white rounded-2xl border border-black/[0.07] hover:border-black/20 hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all"
                 >
-                  <div className="w-10 h-10 bg-black/5 rounded-xl flex items-center justify-center text-black shrink-0 border border-black/[0.08]">
+                  <div className="w-11 h-11 bg-black text-white rounded-xl flex items-center justify-center shrink-0">
                     {icons[i]}
                   </div>
                   <div>
-                    <h3 className="font-bold mb-2 text-black">{r.title}</h3>
-                    <p className="text-black/40 text-sm leading-relaxed">{r.desc}</p>
+                    <h3 className="font-bold text-base sm:text-lg mb-1.5 text-black leading-snug">{r.title}</h3>
+                    <p className="text-black/55 text-sm leading-relaxed">{r.desc}</p>
                   </div>
                 </div>
               ))}
