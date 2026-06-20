@@ -62,6 +62,24 @@ html = html
   .replace(/<meta name="twitter:title"[^>]*>/, `<meta name="twitter:title" content="${TITLE}" />`)
   .replace(/<meta name="twitter:description"[^>]*>/, `<meta name="twitter:description" content="${DESCRIPTION}" />`)
 
+// --- Self-reference hreflang to this page (was inherited as "/") ---
+html = html.replace(
+  /(<link rel="alternate" hreflang="[^"]+" href=")https:\/\/www\.clickriseai\.com\/(" ?\/>)/g,
+  `$1${URL}$2`
+)
+
+// --- Drop the home FAQPage schema (no FAQ on this page) ---
+html = html.replace(
+  /<script type="application\/ld\+json">(?:(?!<\/script>)[\s\S])*?"@type":\s*"FAQPage"[\s\S]*?<\/script>\s*/,
+  ''
+)
+
+// --- Add a BreadcrumbList (Home > Secteurs) ---
+const breadcrumb = `<script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"${SITE}/"},{"@type":"ListItem","position":2,"name":"Secteurs","item":"${URL}"}]}
+    </script>`
+html = html.replace(/<\/head>/, `${breadcrumb}\n  </head>`)
+
 // --- Crawlable static fallback (replaced by React on load) ---
 const sectorsHtml = SECTORS.map(
   ([name, tag]) =>
