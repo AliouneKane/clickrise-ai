@@ -30,6 +30,7 @@ import { useLang } from '../lib/i18n'
 import { translations } from '../content/translations'
 import { Link, useRoute } from '../lib/router'
 import { SectionBadge } from './ui/section-badge'
+import { useDocumentSeo, SEO } from '../lib/seo'
 
 // Icons mapped 1:1 to translations.industries.items (same order, both langs)
 const industryIcons = [
@@ -119,6 +120,8 @@ export const IndustriesPage = () => {
   const t = translations[lang].industries
   const [selected, setSelected] = useState(0)
   const detailRef = useRef<HTMLDivElement>(null)
+
+  useDocumentSeo(SEO.industries)
 
   const active = t.items[selected]
 

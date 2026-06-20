@@ -30,6 +30,7 @@ import { LangContext, useLang, type Lang } from './lib/i18n';
 import { RouteProvider, useRoute } from './lib/router';
 import { IndustriesTeaser, IndustriesPage } from './components/industries';
 import { SectionBadge } from './components/ui/section-badge';
+import { useDocumentSeo, SEO } from './lib/seo';
 import { translations } from './content/translations';
 
 // --- Components ---
@@ -1058,7 +1059,9 @@ const Footer = () => {
   );
 };
 
-const HomePage = () => (
+const HomePage = () => {
+  useDocumentSeo(SEO.home);
+  return (
   <>
     <Navbar1 />
     <main>
@@ -1076,11 +1079,12 @@ const HomePage = () => (
     </main>
     <Footer />
   </>
-);
+  );
+};
 
 const Shell = () => {
   const { path } = useRoute();
-  const isIndustries = path === '/industries';
+  const isIndustries = path.replace(/\/+$/, '') === '/industries';
 
   return (
     <div className="relative min-h-screen font-sans bg-white selection:bg-black/15">
