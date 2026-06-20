@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
-    "postbuild": "react-snap || true"
+    "postbuild": "react-snap || true; node scripts/prerender-industries.mjs"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
