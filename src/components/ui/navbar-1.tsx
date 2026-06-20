@@ -14,10 +14,10 @@ const Navbar1 = () => {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center w-full py-5 px-4">
-      <div className="flex items-center justify-between px-6 py-3 bg-white rounded-full shadow-[0_4px_24px_rgba(0,0,0,0.08)] w-full max-w-3xl relative z-10 border border-black/[0.06]">
+      <div className="flex items-center justify-between gap-6 px-6 py-3 bg-white rounded-full shadow-[0_4px_24px_rgba(0,0,0,0.08)] w-full max-w-5xl relative z-10 border border-black/[0.06]">
 
         {/* Logo */}
-        <a href="/" className="flex items-center gap-2.5">
+        <a href="/" className="flex items-center gap-2.5 shrink-0">
           <motion.div
             className="w-8 h-8 bg-black flex items-center justify-center"
             initial={{ scale: 0.8 }}
@@ -33,7 +33,7 @@ const Navbar1 = () => {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-6 lg:space-x-7">
           {t.items.map((item, i) => (
             <motion.div
               key={item.label}
@@ -44,7 +44,7 @@ const Navbar1 = () => {
             >
               <a
                 href={item.href}
-                className="text-sm text-gray-900/60 hover:text-gray-900 transition-colors font-medium"
+                className="text-sm text-gray-900/60 hover:text-gray-900 transition-colors font-medium whitespace-nowrap"
               >
                 {item.label}
               </a>
@@ -53,7 +53,7 @@ const Navbar1 = () => {
         </nav>
 
         {/* Desktop right: lang toggle + CTA */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3 shrink-0">
           <motion.button
             onClick={() => setLang(lang === 'en' ? 'fr' : 'en')}
             className="text-xs font-bold uppercase tracking-widest text-black/35 hover:text-black transition-colors px-1"

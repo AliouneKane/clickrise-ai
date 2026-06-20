@@ -20,12 +20,16 @@ import {
   Plus,
   Quote,
   Sparkles,
+  Target,
   Terminal,
   TrendingUp,
   Users,
   Zap,
 } from 'lucide-react';
 import { LangContext, useLang, type Lang } from './lib/i18n';
+import { RouteProvider, useRoute } from './lib/router';
+import { IndustriesTeaser, IndustriesPage } from './components/industries';
+import { SectionBadge } from './components/ui/section-badge';
 import { translations } from './content/translations';
 
 // --- Components ---
@@ -117,10 +121,7 @@ const Hero = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/55 text-xs font-bold mb-6 uppercase tracking-widest">
-            <Sparkles className="w-3 h-3" />
-            {t.badge}
-          </div>
+          <SectionBadge className="mb-6">{t.badge}</SectionBadge>
 
           <h1 className="text-5xl md:text-6xl font-display font-bold leading-[1.05] mb-6 text-black">
             {t.h1[0]}<br />
@@ -265,11 +266,7 @@ const Hero = () => {
 
 const SectionHeader = ({ title, subtitle, badge }: { title: string; subtitle: string; badge?: string }) => (
   <div className="text-center mb-16">
-    {badge && (
-      <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
-        {badge}
-      </div>
-    )}
+    {badge && <SectionBadge className="mb-4">{badge}</SectionBadge>}
     <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-black">{title}</h2>
     <p className="text-black/40 max-w-2xl mx-auto">{subtitle}</p>
   </div>
@@ -291,9 +288,7 @@ const Services = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div>
-            <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
-              {t.badge}
-            </div>
+            <SectionBadge className="mb-4">{t.badge}</SectionBadge>
             <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight">
               {t.heading[0]}<br />{t.heading[1]}
             </h2>
@@ -374,17 +369,6 @@ const Services = () => {
                 >
                   {s.tag}
                 </motion.span>
-
-                <motion.div
-                  variants={{
-                    rest:    { x: 0, color: 'rgba(10,10,10,0.2)' },
-                    hovered: { x: 5, color: '#ffffff' },
-                  }}
-                  transition={{ duration: 0.28 }}
-                  className="shrink-0"
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </motion.div>
               </motion.div>
             </motion.div>
           ))}
@@ -405,9 +389,7 @@ const HowItWorks = () => {
 
           {/* Left — sticky text */}
           <div className="lg:sticky lg:top-24">
-            <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
-              {t.badge}
-            </div>
+            <SectionBadge className="mb-4">{t.badge}</SectionBadge>
             <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight mb-5">
               {lang === 'fr' ? <>{t.steps.length} étapes.<br />Pas de détour.</> : <>{t.steps.length} steps.<br />No fluff.</>}
             </h2>
@@ -459,7 +441,7 @@ const WhyUs = () => {
   const t = translations[lang].whyUs;
 
   const icons = [
-    <Sparkles className="w-5 h-5" />,
+    <Target className="w-5 h-5" />,
     <Code2 className="w-5 h-5" />,
     <Users className="w-5 h-5" />,
     <Globe className="w-5 h-5" />,
@@ -472,9 +454,7 @@ const WhyUs = () => {
           <div className="absolute inset-0 grid-pattern opacity-60" />
           <div className="relative z-10">
             <div className="text-center mb-10 md:mb-16">
-              <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
-                {t.badge}
-              </div>
+              <SectionBadge className="mb-4">{t.badge}</SectionBadge>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 md:mb-6 text-black leading-[1.1]">
                 {t.heading[0]}<br />{t.heading[1]}
               </h2>
@@ -565,9 +545,7 @@ const CaseStudies = () => {
 
         {/* Header */}
         <div className="pb-12">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 mb-3">
-            {t.badge}
-          </p>
+          <SectionBadge className="mb-3">{t.badge}</SectionBadge>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight max-w-xl">
               {t.heading}
@@ -753,9 +731,7 @@ const About = () => {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <div className="inline-block px-3 py-1 rounded-full bg-black/5 border border-black/[0.08] text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 mb-4">
-            {t.badge}
-          </div>
+          <SectionBadge className="mb-4">{t.badge}</SectionBadge>
           <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight">
             {t.headline}
           </h2>
@@ -1022,9 +998,33 @@ const Footer = () => {
             <p className="text-white/35 max-w-sm text-sm leading-relaxed mb-4">
               {t.desc}
             </p>
-            <p className="text-white/20 text-xs">
+            <p className="text-white/20 text-xs mb-6">
               {t.founded}
             </p>
+            <div className="flex items-center gap-3">
+              <a
+                href="https://www.linkedin.com/in/alioune-kane-a2a25a258/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="w-9 h-9 rounded-full border border-white/[0.12] flex items-center justify-center text-white/45 hover:text-white hover:border-white/30 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <a
+                href="https://www.instagram.com/abdousalamkane_/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="w-9 h-9 rounded-full border border-white/[0.12] flex items-center justify-center text-white/45 hover:text-white hover:border-white/30 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+                </svg>
+              </a>
+            </div>
           </div>
 
           <div>
@@ -1058,6 +1058,39 @@ const Footer = () => {
   );
 };
 
+const HomePage = () => (
+  <>
+    <Navbar1 />
+    <main>
+      <Hero />
+      <InfiniteMarquee />
+      <Services />
+      <LazySection minHeight="500px"><IndustriesTeaser /></LazySection>
+      <LazySection minHeight="700px"><HowItWorks /></LazySection>
+      <LazySection minHeight="700px"><WhyUs /></LazySection>
+      <LazySection minHeight="700px"><CaseStudies /></LazySection>
+      <LazySection minHeight="600px"><About /></LazySection>
+      <LazySection minHeight="500px"><Testimonials /></LazySection>
+      <LazySection minHeight="400px"><FAQ /></LazySection>
+      <LazySection minHeight="800px"><CTA /></LazySection>
+    </main>
+    <Footer />
+  </>
+);
+
+const Shell = () => {
+  const { path } = useRoute();
+  const isIndustries = path === '/industries';
+
+  return (
+    <div className="relative min-h-screen font-sans bg-white selection:bg-black/15">
+      <BackgroundEffects />
+      {isIndustries ? <IndustriesPage /> : <HomePage />}
+      <elevenlabs-convai agent-id="agent_3601kjqppkvafmra74f6ph2v55vq"></elevenlabs-convai>
+    </div>
+  );
+};
+
 export default function App() {
   const [lang, setLang] = useState<Lang>(() =>
     navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en'
@@ -1088,24 +1121,9 @@ export default function App() {
     <LazyMotion features={domAnimation}>
     <MotionConfig reducedMotion={isMobile ? "always" : "never"}>
     <LangContext.Provider value={{ lang, setLang }}>
-      <div className="relative min-h-screen font-sans bg-white selection:bg-black/15">
-        <BackgroundEffects />
-        <Navbar1 />
-        <main>
-          <Hero />
-          <InfiniteMarquee />
-          <Services />
-          <LazySection minHeight="700px"><HowItWorks /></LazySection>
-          <LazySection minHeight="700px"><WhyUs /></LazySection>
-          <LazySection minHeight="700px"><CaseStudies /></LazySection>
-          <LazySection minHeight="600px"><About /></LazySection>
-          <LazySection minHeight="500px"><Testimonials /></LazySection>
-          <LazySection minHeight="400px"><FAQ /></LazySection>
-          <LazySection minHeight="800px"><CTA /></LazySection>
-        </main>
-        <Footer />
-        <elevenlabs-convai agent-id="agent_3601kjqppkvafmra74f6ph2v55vq"></elevenlabs-convai>
-      </div>
+      <RouteProvider>
+        <Shell />
+      </RouteProvider>
     </LangContext.Provider>
     </MotionConfig>
     </LazyMotion>

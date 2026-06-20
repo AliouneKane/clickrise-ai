@@ -39,7 +39,8 @@
     "source": "dist",
     "destination": "dist",
     "include": [
-      "/"
+      "/",
+      "/industries"
     ],
     "inlineCss": false,
     "removeBlobs": true,
