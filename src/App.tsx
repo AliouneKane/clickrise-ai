@@ -10,15 +10,18 @@ import { CaseStudiesGallery } from './components/ui/case-studies-gallery';
 import { m as motion, LazyMotion, domAnimation, useScroll, useTransform, MotionConfig } from 'motion/react';
 import {
   ArrowRight,
+  BarChart3,
   Bot,
   Code2,
   Cpu,
   Database,
+  FileText,
   Globe,
   Layers,
   Mail,
   Plus,
   Quote,
+  RefreshCw,
   Sparkles,
   Target,
   Terminal,
@@ -278,10 +281,11 @@ const Services = () => {
   const t = translations[lang].services;
 
   const icons = [
-    <Mail className="w-5 h-5" />,
-    <TrendingUp className="w-5 h-5" />,
-    <Code2 className="w-5 h-5" />,
-    <Globe className="w-5 h-5" />,
+    <Zap className="w-5 h-5" />,
+    <FileText className="w-5 h-5" />,
+    <RefreshCw className="w-5 h-5" />,
+    <Database className="w-5 h-5" />,
+    <BarChart3 className="w-5 h-5" />,
   ];
 
   return (
