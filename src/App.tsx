@@ -13,6 +13,8 @@ import {
   BarChart3,
   Bot,
   Check,
+  ChevronLeft,
+  ChevronRight,
   Clock,
   Code2,
   Cpu,
@@ -175,10 +177,7 @@ const Hero = () => {
           <div className="w-full max-w-[380px] rounded-3xl border border-black/[0.08] bg-white shadow-[0_30px_80px_-25px_rgba(0,0,0,0.22)] overflow-hidden">
             <div className="p-7 sm:p-8">
               <div className="inline-flex items-center gap-2 rounded-full bg-black/[0.05] border border-black/[0.07] px-3 py-1.5 mb-6">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 <span className="text-[11px] font-bold uppercase tracking-wider text-black/50">
                   {howItWorks.steps[0].title}
                 </span>
@@ -518,61 +517,39 @@ const CaseStudies = () => {
         <div className="mb-6 overflow-hidden rounded-2xl border border-black/[0.08] bg-white">
           <div className="grid lg:grid-cols-2">
             {/* Visual side */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-[#0A0A0F] via-[#0E0E14] to-[#16161d] min-h-[420px] lg:min-h-0">
-              <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:22px_22px] opacity-40 pointer-events-none" />
-              <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-white/[0.07] blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-20 -right-20 w-72 h-72 rounded-full bg-white/[0.05] blur-3xl pointer-events-none" />
+            <div className="relative overflow-hidden bg-[#0A0A0F] min-h-[420px] lg:min-h-0">
+              <img
+                src="/images/case-study-illustration.png"
+                alt={featured.title}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
               {/* Live badge */}
-              <div className="absolute top-6 right-6 inline-flex items-center gap-1.5 rounded-full border border-white/[0.1] bg-white/[0.04] backdrop-blur-sm px-3 py-1.5">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-wider text-white/50">
+              <div className="absolute top-6 right-6 inline-flex items-center gap-1.5 rounded-full border border-white/[0.1] bg-white/[0.08] backdrop-blur-sm px-3 py-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="text-[10px] font-medium uppercase tracking-wider text-white/70">
                   {lang === 'fr' ? 'En direct' : 'Live'}
                 </span>
               </div>
 
-              <div className="relative h-full flex flex-col items-center justify-center gap-8 p-8">
-                {/* Big stat — the outcome, not a fake product screenshot */}
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center mb-6 shadow-[0_8px_20px_-6px_rgba(255,255,255,0.4)]">
-                    <Mail className="w-4.5 h-4.5 text-black" />
-                  </div>
-                  <div className="text-7xl sm:text-8xl font-display font-bold text-white leading-none mb-3">
-                    {featuredMetrics[0].value}
-                  </div>
-                  <div className="text-white/45 text-sm uppercase tracking-widest">
-                    {featuredMetrics[0].label}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-8 border-t border-white/[0.08] pt-6">
-                  {featuredMetrics.slice(1).map((m) => (
-                    <div key={m.label} className="flex flex-col items-center gap-1">
-                      <div className="text-xl font-display font-bold text-white">{m.value}</div>
-                      <div className="text-white/35 text-[11px] uppercase tracking-wider">{m.label}</div>
+              {/* Metrics + stack, anchored to the bottom over the image */}
+              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-5 p-8">
+                <div className="flex items-center gap-8">
+                  {featuredMetrics.map((m) => (
+                    <div key={m.label} className="flex flex-col gap-0.5">
+                      <div className="text-2xl font-display font-bold text-white">{m.value}</div>
+                      <div className="text-white/55 text-[11px] uppercase tracking-wider">{m.label}</div>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex flex-wrap gap-1.5 justify-center max-w-[320px]">
+                <div className="flex flex-wrap gap-1.5">
                   {featured.stack.map((tech) => (
-                    <span key={tech} className="text-[10px] border border-white/[0.1] bg-white/[0.04] px-2.5 py-1 rounded-full text-white/45">
+                    <span key={tech} className="text-[10px] border border-white/[0.15] bg-white/[0.08] backdrop-blur-sm px-2.5 py-1 rounded-full text-white/70">
                       {tech}
                     </span>
                   ))}
-                </div>
-
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2">
-                  <span className="relative flex h-1.5 w-1.5 shrink-0">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/40" />
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white/60" />
-                  </span>
-                  <span className="text-[11px] text-white/40">
-                    {lang === 'fr' ? 'Nouveau lead toutes les 4 minutes' : 'New lead every 4 minutes'}
-                  </span>
                 </div>
               </div>
             </div>
@@ -788,58 +765,121 @@ const About = () => {
 const Testimonials = () => {
   const { lang } = useLang();
   const t = translations[lang].testimonials;
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
 
   const initials = (name: string) => name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
-  const item = t.items[0];
-  const cut = 28; // corner-notch size in px, echoes the industries/case-study card language
+
+  // Real quotes first, then an honest "join them" slide — keeps the carousel
+  // functional today with one testimonial and ready to grow without fake entries.
+  const slides = [
+    ...t.items.map((item) => ({ kind: 'quote' as const, item })),
+    { kind: 'cta' as const },
+  ];
+
+  const scrollToIndex = (i: number) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const clamped = Math.max(0, Math.min(i, slides.length - 1));
+    const card = track.children[clamped] as HTMLElement | undefined;
+    card?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    setActive(clamped);
+  };
+
+  const handleScroll = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    const center = track.scrollLeft + track.clientWidth / 2;
+    let closest = 0;
+    let closestDist = Infinity;
+    Array.from(track.children).forEach((child, i) => {
+      const el = child as HTMLElement;
+      const dist = Math.abs(el.offsetLeft + el.offsetWidth / 2 - center);
+      if (dist < closestDist) { closestDist = dist; closest = i; }
+    });
+    setActive(closest);
+  };
 
   return (
-    <section className="py-24 px-6 bg-white overflow-hidden">
+    <section className="py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         <SectionHeader badge={t.badge} title={t.heading} subtitle={t.sub} />
 
-        {/* Stacked-card treatment: one real quote up front, two blank "more coming" slots
-           behind it — honest about having a single testimonial today without pretending
-           the deck is empty. */}
-        <div className="relative max-w-xl mx-auto" style={{ height: 340 }}>
+        {/* Swipeable card track — drag/swipe on touch, arrow buttons + dots on desktop */}
+        <div className="relative">
           <div
-            className="absolute inset-0 border-2 border-black/10 bg-[#F7F7F5]"
-            style={{
-              clipPath: `polygon(${cut}px 0%, calc(100% - ${cut}px) 0%, 100% ${cut}px, 100% 100%, calc(100% - ${cut}px) 100%, ${cut}px 100%, 0 100%, 0 0)`,
-              transform: 'rotate(-3deg) translateY(10px)',
-            }}
-          />
-          <div
-            className="absolute inset-0 border-2 border-black/[0.06] bg-white"
-            style={{
-              clipPath: `polygon(${cut}px 0%, calc(100% - ${cut}px) 0%, 100% ${cut}px, 100% 100%, calc(100% - ${cut}px) 100%, ${cut}px 100%, 0 100%, 0 0)`,
-              transform: 'rotate(2deg) translateY(5px)',
-            }}
-          />
-
-          <div
-            className="absolute inset-0 flex flex-col justify-between border-2 border-black bg-white p-8 sm:p-10"
-            style={{
-              clipPath: `polygon(${cut}px 0%, calc(100% - ${cut}px) 0%, 100% ${cut}px, 100% 100%, calc(100% - ${cut}px) 100%, ${cut}px 100%, 0 100%, 0 0)`,
-              boxShadow: '0 20px 50px -20px rgba(0,0,0,0.25)',
-            }}
+            ref={trackRef}
+            onScroll={handleScroll}
+            className="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 -mx-6 px-6 sm:px-[calc(50%-220px)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            <div>
-              <Quote className="w-8 h-8 text-black/15 mb-5" />
-              <p className="text-xl sm:text-2xl text-black font-semibold leading-snug">"{item.quote}"</p>
-            </div>
-            <div className="flex items-center gap-3 pt-6">
-              <div className="w-11 h-11 bg-black text-white flex items-center justify-center text-xs font-bold shrink-0"
-                style={{ clipPath: `polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% 100%, calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 0)` }}>
-                {initials(item.author)}
+            {slides.map((slide, i) => (
+              <div
+                key={i}
+                className="snap-center shrink-0 w-[85vw] sm:w-[440px] flex flex-col justify-between bg-[#F7F7F5] border border-black/[0.08] rounded-3xl p-8 sm:p-9"
+              >
+                {slide.kind === 'quote' ? (
+                  <>
+                    <div>
+                      <Quote className="w-7 h-7 text-black/15 mb-5" />
+                      <p className="text-lg text-black font-medium leading-relaxed mb-8">"{slide.item.quote}"</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0">
+                        {initials(slide.item.author)}
+                      </div>
+                      <div className="text-sm font-bold text-black">{slide.item.author}</div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex flex-col items-start justify-center h-full text-left">
+                    <p className="text-lg text-black font-medium leading-relaxed mb-6">{t.note}</p>
+                    <button data-cal-namespace="15min" data-cal-link="alioune-kane-1qdw6v/15min"
+                      data-cal-config='{"layout":"month_view"}'
+                      className="inline-flex items-center gap-2 bg-black text-white font-bold px-6 py-3 rounded-xl hover:bg-black/80 transition-colors cursor-pointer text-sm">
+                      {t.cta} <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
               </div>
-              <div className="text-sm font-bold text-black">{item.author}</div>
-            </div>
+            ))}
           </div>
+
+          {slides.length > 1 && (
+            <>
+              <button
+                onClick={() => scrollToIndex(active - 1)}
+                aria-label="Previous"
+                className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 w-10 h-10 rounded-full bg-white border border-black/10 items-center justify-center shadow-md hover:bg-black hover:text-white transition-colors disabled:opacity-30"
+                disabled={active === 0}
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => scrollToIndex(active + 1)}
+                aria-label="Next"
+                className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 w-10 h-10 rounded-full bg-white border border-black/10 items-center justify-center shadow-md hover:bg-black hover:text-white transition-colors disabled:opacity-30"
+                disabled={active === slides.length - 1}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </>
+          )}
         </div>
 
+        {slides.length > 1 && (
+          <div className="flex items-center justify-center gap-2 mt-6">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollToIndex(i)}
+                aria-label={`Go to slide ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all ${active === i ? 'w-6 bg-black' : 'w-1.5 bg-black/15'}`}
+              />
+            ))}
+          </div>
+        )}
+
         <div className="text-center mt-10">
-          <p className="text-black/35 text-xs italic mb-8">{t.note}</p>
           <button data-cal-namespace="15min" data-cal-link="alioune-kane-1qdw6v/15min"
             data-cal-config='{"layout":"month_view"}'
             className="inline-flex items-center gap-2 bg-black text-white font-bold px-8 py-4 rounded-xl hover:bg-black/80 transition-colors cursor-pointer">
