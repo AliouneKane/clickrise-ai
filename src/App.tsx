@@ -7,14 +7,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import { Navbar1 } from './components/ui/navbar-1';
 import { CaseStudiesGallery } from './components/ui/case-studies-gallery';
+import { StaggerTestimonials, type StaggerCardItem } from './components/ui/stagger-testimonials';
 import { m as motion, LazyMotion, domAnimation, useScroll, useTransform, MotionConfig } from 'motion/react';
 import {
   ArrowRight,
   BarChart3,
   Bot,
   Check,
-  ChevronLeft,
-  ChevronRight,
   Clock,
   Code2,
   Cpu,
@@ -24,7 +23,6 @@ import {
   Layers,
   Mail,
   Plus,
-  Quote,
   RefreshCw,
   Sparkles,
   Target,
@@ -480,13 +478,13 @@ const CaseStudies = () => {
         { value: '3',    label: 'Systems built' },
         { value: '100%', label: 'Automated workflows' },
         { value: '0h',   label: 'Manual work once live' },
-        { value: '2+',   label: 'Live in production' },
+        { value: '2+',   label: 'Already in daily use' },
       ]
     : [
         { value: '3',    label: 'Systèmes construits' },
         { value: '100%', label: 'Workflows automatisés' },
         { value: '0h',   label: 'Travail manuel une fois livré' },
-        { value: '2+',   label: 'En production' },
+        { value: '2+',   label: 'Déjà utilisés au quotidien' },
       ];
 
   // Placeholder images — swap with real project screenshots when available
@@ -765,119 +763,62 @@ const About = () => {
 const Testimonials = () => {
   const { lang } = useLang();
   const t = translations[lang].testimonials;
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
 
   const initials = (name: string) => name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
 
-  // Real quotes first, then an honest "join them" slide — keeps the carousel
+  // Real quotes first, then an honest "join them" card — keeps the stack
   // functional today with one testimonial and ready to grow without fake entries.
-  const slides = [
-    ...t.items.map((item) => ({ kind: 'quote' as const, item })),
-    { kind: 'cta' as const },
+  const items: StaggerCardItem[] = [
+    ...t.items.map((item, i) => ({
+      id: `quote-${i}`,
+      render: (isCenter: boolean) => (
+        <div className="flex h-full flex-col justify-between">
+          <div>
+            <div
+              className={`w-11 h-11 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mb-5 ${
+                isCenter ? 'bg-white text-black' : 'bg-black text-white'
+              }`}
+            >
+              {initials(item.author)}
+            </div>
+            <p className={`text-base sm:text-lg font-medium leading-relaxed ${isCenter ? 'text-white' : 'text-black'}`}>
+              "{item.quote}"
+            </p>
+          </div>
+          <div className={`text-sm italic mt-6 ${isCenter ? 'text-white/70' : 'text-black/50'}`}>
+            — {item.author}
+          </div>
+        </div>
+      ),
+    })),
+    {
+      id: 'cta',
+      render: (isCenter: boolean) => (
+        <div className="flex h-full flex-col items-start justify-center text-left">
+          <p className={`text-base sm:text-lg font-medium leading-relaxed mb-6 ${isCenter ? 'text-white' : 'text-black'}`}>
+            {t.note}
+          </p>
+          <button
+            data-cal-namespace="15min"
+            data-cal-link="alioune-kane-1qdw6v/15min"
+            data-cal-config='{"layout":"month_view"}'
+            className={`inline-flex items-center gap-2 font-bold px-5 py-3 rounded-xl transition-colors cursor-pointer text-sm ${
+              isCenter ? 'bg-white text-black hover:bg-white/85' : 'bg-black text-white hover:bg-black/80'
+            }`}
+          >
+            {t.cta} <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      ),
+    },
   ];
 
-  const scrollToIndex = (i: number) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const clamped = Math.max(0, Math.min(i, slides.length - 1));
-    const card = track.children[clamped] as HTMLElement | undefined;
-    card?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-    setActive(clamped);
-  };
-
-  const handleScroll = () => {
-    const track = trackRef.current;
-    if (!track) return;
-    const center = track.scrollLeft + track.clientWidth / 2;
-    let closest = 0;
-    let closestDist = Infinity;
-    Array.from(track.children).forEach((child, i) => {
-      const el = child as HTMLElement;
-      const dist = Math.abs(el.offsetLeft + el.offsetWidth / 2 - center);
-      if (dist < closestDist) { closestDist = dist; closest = i; }
-    });
-    setActive(closest);
-  };
-
   return (
-    <section className="py-24 px-6 bg-white">
+    <section className="py-24 px-6 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <SectionHeader badge={t.badge} title={t.heading} subtitle={t.sub} />
 
-        {/* Swipeable card track — drag/swipe on touch, arrow buttons + dots on desktop */}
-        <div className="relative">
-          <div
-            ref={trackRef}
-            onScroll={handleScroll}
-            className="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 -mx-6 px-6 sm:px-[calc(50%-220px)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {slides.map((slide, i) => (
-              <div
-                key={i}
-                className="snap-center shrink-0 w-[85vw] sm:w-[440px] flex flex-col justify-between bg-[#F7F7F5] border border-black/[0.08] rounded-3xl p-8 sm:p-9"
-              >
-                {slide.kind === 'quote' ? (
-                  <>
-                    <div>
-                      <Quote className="w-7 h-7 text-black/15 mb-5" />
-                      <p className="text-lg text-black font-medium leading-relaxed mb-8">"{slide.item.quote}"</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0">
-                        {initials(slide.item.author)}
-                      </div>
-                      <div className="text-sm font-bold text-black">{slide.item.author}</div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="flex flex-col items-start justify-center h-full text-left">
-                    <p className="text-lg text-black font-medium leading-relaxed mb-6">{t.note}</p>
-                    <button data-cal-namespace="15min" data-cal-link="alioune-kane-1qdw6v/15min"
-                      data-cal-config='{"layout":"month_view"}'
-                      className="inline-flex items-center gap-2 bg-black text-white font-bold px-6 py-3 rounded-xl hover:bg-black/80 transition-colors cursor-pointer text-sm">
-                      {t.cta} <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {slides.length > 1 && (
-            <>
-              <button
-                onClick={() => scrollToIndex(active - 1)}
-                aria-label="Previous"
-                className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 w-10 h-10 rounded-full bg-white border border-black/10 items-center justify-center shadow-md hover:bg-black hover:text-white transition-colors disabled:opacity-30"
-                disabled={active === 0}
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => scrollToIndex(active + 1)}
-                aria-label="Next"
-                className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 w-10 h-10 rounded-full bg-white border border-black/10 items-center justify-center shadow-md hover:bg-black hover:text-white transition-colors disabled:opacity-30"
-                disabled={active === slides.length - 1}
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </>
-          )}
-        </div>
-
-        {slides.length > 1 && (
-          <div className="flex items-center justify-center gap-2 mt-6">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => scrollToIndex(i)}
-                aria-label={`Go to slide ${i + 1}`}
-                className={`h-1.5 rounded-full transition-all ${active === i ? 'w-6 bg-black' : 'w-1.5 bg-black/15'}`}
-              />
-            ))}
-          </div>
-        )}
+        <StaggerTestimonials items={items} />
 
         <div className="text-center mt-10">
           <button data-cal-namespace="15min" data-cal-link="alioune-kane-1qdw6v/15min"
