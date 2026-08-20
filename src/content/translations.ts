@@ -148,7 +148,7 @@ export const translations = {
       heading: "Just getting started.",
       sub:     "Clickrise AI is just getting started, early clients get full, undivided attention until they hit their results. Here's what people who've seen the work say:",
       items: [
-        { quote: "The bot Alioune built saved us hours of manual research every week. I find really interesting hackathons through it. It just works.", author: "Classmate, Engineering School" },
+        { quote: "The bot Alioune built saved us hours of manual research every week. I find really interesting hackathons through it. It just works.", author: "Classmate, ENSAE" },
       ],
       note:    "More testimonials incoming as we grow",
       cta:     "Be one of the first, book your free call",
@@ -366,7 +366,7 @@ export const translations = {
       heading: "On commence.",
       sub:     "Clickrise AI démarre tout juste, les premiers clients ont mon attention totale jusqu'à ce qu'ils atteignent leurs résultats. Voici ce que disent ceux qui ont vu le travail :",
       items: [
-        { quote: "Le bot qu'Alioune a construit nous a économisé des heures de recherche manuelle chaque semaine. J'y trouve des hackathons très intéressants. Ça marche.", author: "Camarade, École d'Ingénieurs" },
+        { quote: "Le bot qu'Alioune a construit nous a économisé des heures de recherche manuelle chaque semaine. J'y trouve des hackathons très intéressants. Ça marche.", author: "Camarade, ENSAE" },
       ],
       note:    "D'autres témoignages à venir au fur et à mesure de notre croissance",
       cta:     "Soyez parmi les premiers, réservez votre appel gratuit",

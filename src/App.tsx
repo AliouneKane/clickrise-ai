@@ -786,7 +786,7 @@ const Testimonials = () => {
             </p>
           </div>
           <div className={`text-sm italic mt-6 ${isCenter ? 'text-white/70' : 'text-black/50'}`}>
-            — {item.author}
+            {item.author}
           </div>
         </div>
       ),
