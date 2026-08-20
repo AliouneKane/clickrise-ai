@@ -3,26 +3,23 @@ import { m as motion } from 'motion/react'
 import {
   ArrowLeft,
   ArrowRight,
-  BookOpen,
-  Bot,
   Boxes,
-  Building2,
-  Camera,
   Check,
-  GraduationCap,
-  Hotel,
-  Landmark,
+  Droplet,
+  Dumbbell,
+  Gavel,
+  HardHat,
+  Home,
   LineChart,
   Megaphone,
-  MousePointerClick,
-  Network,
+  MessageCircle,
   Palette,
-  PenTool,
-  Server,
-  Share2,
+  Repeat,
+  Shield,
   ShoppingCart,
   Stethoscope,
-  UserCheck,
+  Truck,
+  Users,
   Wrench,
   Zap,
 } from 'lucide-react'
@@ -32,42 +29,40 @@ import { Link, useRoute } from '../lib/router'
 import { SectionBadge } from './ui/section-badge'
 import { useDocumentSeo, SEO } from '../lib/seo'
 
-// Icons mapped 1:1 to translations.industries.items (same order, both langs)
-const industryIcons = [
-  <Stethoscope className="w-5 h-5" />,      // Dental & Healthcare
-  <ShoppingCart className="w-5 h-5" />,     // E-commerce
-  <LineChart className="w-5 h-5" />,        // Investment & Finance
-  <Wrench className="w-5 h-5" />,           // Local Services
-  <Megaphone className="w-5 h-5" />,        // Digital Marketing Agencies
-  <Camera className="w-5 h-5" />,           // Photography Agencies
-  <PenTool className="w-5 h-5" />,          // Content Writing & Media
-  <Bot className="w-5 h-5" />,              // AI & Automation Agencies
-  <MousePointerClick className="w-5 h-5" />, // PPC Agencies
-  <Palette className="w-5 h-5" />,          // Creative Agencies
-  <Share2 className="w-5 h-5" />,           // LinkedIn & Social Agencies
-  <Server className="w-5 h-5" />,           // Managed Service Providers
-  <Building2 className="w-5 h-5" />,        // Real Estate Development
-  <Landmark className="w-5 h-5" />,         // Brokers & Financial Services
-  <Boxes className="w-5 h-5" />,            // Software & SaaS
-  <GraduationCap className="w-5 h-5" />,    // Education
-  <Network className="w-5 h-5" />,          // Enterprise & Corporate
-  <Hotel className="w-5 h-5" />,            // Hospitality & Luxury
-  <UserCheck className="w-5 h-5" />,        // HR & Recruiting
-  <BookOpen className="w-5 h-5" />,         // Info Products
-]
+// Icons keyed by the `icon` string set on each industry item in translations.ts —
+// robust to reordering/length changes between EN and FR, unlike a positional array.
+const iconMap: Record<string, React.ReactNode> = {
+  megaphone:       <Megaphone className="w-5 h-5" />,
+  wrench:          <Wrench className="w-5 h-5" />,
+  home:            <Home className="w-5 h-5" />,
+  droplet:         <Droplet className="w-5 h-5" />,
+  truck:           <Truck className="w-5 h-5" />,
+  hardhat:         <HardHat className="w-5 h-5" />,
+  gavel:           <Gavel className="w-5 h-5" />,
+  shield:          <Shield className="w-5 h-5" />,
+  'message-circle': <MessageCircle className="w-5 h-5" />,
+  users:           <Users className="w-5 h-5" />,
+  palette:         <Palette className="w-5 h-5" />,
+  dumbbell:        <Dumbbell className="w-5 h-5" />,
+  stethoscope:     <Stethoscope className="w-5 h-5" />,
+  boxes:           <Boxes className="w-5 h-5" />,
+  'shopping-cart': <ShoppingCart className="w-5 h-5" />,
+  repeat:          <Repeat className="w-5 h-5" />,
+  'line-chart':    <LineChart className="w-5 h-5" />,
+}
+
+const getIcon = (key: string) => iconMap[key] ?? <Boxes className="w-5 h-5" />
 
 /* ──────────────────────────────────────────────────────────────
-   Home teaser — compact, links out to the dedicated page
+   Home teaser — one card per service, showing exactly who it's for
    ────────────────────────────────────────────────────────────── */
 export const IndustriesTeaser = () => {
   const { lang } = useLang()
   const t = translations[lang].industries
-  const preview = t.items.slice(0, 7)
-  const remaining = t.items.length - preview.length
 
   return (
     <section id="industries" className="py-24 px-6 bg-white border-t border-black/[0.06]">
-      <div className="max-w-4xl mx-auto text-center">
+      <div className="max-w-5xl mx-auto text-center">
         <SectionBadge className="mb-4">{t.badge}</SectionBadge>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 text-black leading-[1.1]">
           {t.heading[0]}<br />{t.heading[1]}
@@ -76,29 +71,36 @@ export const IndustriesTeaser = () => {
           {t.sub}
         </p>
 
-        {/* Compact preview grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
-          {preview.map((item, i) => (
+        {/* One card per service */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-6 text-left">
+          {t.groups.map((group) => (
             <Link
-              key={item.name}
+              key={group.service}
               to="/industries"
-              className="group flex items-center gap-3 p-3.5 bg-white rounded-xl border border-black/[0.07] hover:border-black/25 hover:shadow-[0_4px_18px_rgba(0,0,0,0.06)] transition-all text-left"
+              className="group flex flex-col gap-3 p-5 bg-white rounded-2xl border border-black/[0.07] hover:border-black/25 hover:shadow-[0_4px_18px_rgba(0,0,0,0.06)] transition-all"
             >
-              <span className="w-9 h-9 shrink-0 rounded-lg bg-black/[0.04] border border-black/[0.06] flex items-center justify-center text-black/70 group-hover:bg-black group-hover:text-white transition-colors">
-                {industryIcons[i]}
-              </span>
-              <span className="text-sm font-bold text-black leading-tight">{item.name}</span>
+              <div className="flex items-center gap-3">
+                <span className="w-9 h-9 shrink-0 rounded-lg bg-black/[0.04] border border-black/[0.06] flex items-center justify-center text-black/70 group-hover:bg-black group-hover:text-white transition-colors">
+                  {getIcon(group.items[0].icon)}
+                </span>
+                <span className="text-sm font-bold text-black leading-tight">{group.service}</span>
+              </div>
+              <p className="text-black/45 text-xs leading-relaxed">{group.serviceTagline}</p>
+              <p className="text-black/60 text-xs leading-relaxed">
+                {group.items.map((i) => i.name).join(' · ')}
+              </p>
             </Link>
           ))}
-          <Link
-            to="/industries"
-            className="group flex items-center justify-center gap-2 p-3.5 bg-[#F7F7F5] rounded-xl border border-dashed border-black/15 hover:border-black/40 hover:bg-black/[0.03] transition-all"
-          >
-            <span className="text-sm font-bold text-black/55 group-hover:text-black transition-colors">
-              +{remaining}
-            </span>
-            <ArrowRight className="w-4 h-4 text-black/40 group-hover:text-black group-hover:translate-x-0.5 transition-all" />
-          </Link>
+        </div>
+
+        {/* Universal service note */}
+        <div className="flex items-center justify-center gap-3 p-4 mb-10 bg-[#F7F7F5] rounded-xl border border-dashed border-black/15 text-left">
+          <span className="w-9 h-9 shrink-0 rounded-lg bg-black/[0.04] border border-black/[0.06] flex items-center justify-center text-black/70">
+            {getIcon(t.universal.icon)}
+          </span>
+          <p className="text-black/55 text-xs leading-relaxed">
+            <span className="font-bold text-black">{t.universal.service}</span> — {t.universal.note}
+          </p>
         </div>
 
         <Link
@@ -113,20 +115,21 @@ export const IndustriesTeaser = () => {
 }
 
 /* ──────────────────────────────────────────────────────────────
-   Dedicated /industries page — grid + sticky detail panel
+   Dedicated /industries page — grouped by service, grid + sticky detail
    ────────────────────────────────────────────────────────────── */
 export const IndustriesPage = () => {
   const { lang, setLang } = useLang()
   const t = translations[lang].industries
-  const [selected, setSelected] = useState(0)
+  const [selected, setSelected] = useState<{ group: number; item: number }>({ group: 0, item: 0 })
   const detailRef = useRef<HTMLDivElement>(null)
 
   useDocumentSeo(SEO.industries)
 
-  const active = t.items[selected]
+  const activeGroup = t.groups[selected.group]
+  const active = activeGroup.items[selected.item]
 
-  const handleSelect = (i: number) => {
-    setSelected(i)
+  const handleSelect = (group: number, item: number) => {
+    setSelected({ group, item })
     if (typeof window !== 'undefined' && window.innerWidth < 1024) {
       requestAnimationFrame(() =>
         detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -183,55 +186,79 @@ export const IndustriesPage = () => {
             <p className="text-black/45 leading-relaxed">{t.sub}</p>
           </div>
 
-          {/* Grid + detail */}
+          {/* Grouped by service + detail */}
           <div className="lg:grid lg:grid-cols-[1fr_400px] lg:gap-10 lg:items-start">
-            {/* Industry grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8 lg:mb-0">
-              {t.items.map((item, i) => {
-                const isActive = i === selected
-                return (
-                  <button
-                    key={item.name}
-                    onClick={() => handleSelect(i)}
-                    aria-pressed={isActive}
-                    className={`group flex flex-col gap-3 p-4 rounded-2xl border text-left transition-all ${
-                      isActive
-                        ? 'bg-black border-black shadow-[0_8px_30px_rgba(0,0,0,0.12)]'
-                        : 'bg-white border-black/[0.07] hover:border-black/25 hover:shadow-[0_4px_18px_rgba(0,0,0,0.06)]'
-                    }`}
-                  >
-                    <span
-                      className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
-                        isActive
-                          ? 'bg-white text-black'
-                          : 'bg-black/[0.04] border border-black/[0.06] text-black/70 group-hover:bg-black group-hover:text-white'
-                      }`}
-                    >
-                      {industryIcons[i]}
-                    </span>
-                    <span
-                      className={`text-sm font-bold leading-tight ${
-                        isActive ? 'text-white' : 'text-black'
-                      }`}
-                    >
-                      {item.name}
-                    </span>
-                  </button>
-                )
-              })}
+            {/* Service groups */}
+            <div className="space-y-10 mb-8 lg:mb-0">
+              {t.groups.map((group, gi) => (
+                <div key={group.service}>
+                  <div className="mb-3">
+                    <h3 className="text-lg font-display font-bold text-black leading-tight">{group.service}</h3>
+                    <p className="text-black/45 text-sm leading-relaxed">{group.serviceTagline}</p>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {group.items.map((item, ii) => {
+                      const isActive = gi === selected.group && ii === selected.item
+                      return (
+                        <button
+                          key={item.name}
+                          onClick={() => handleSelect(gi, ii)}
+                          aria-pressed={isActive}
+                          className={`group flex flex-col gap-3 p-4 rounded-2xl border text-left transition-all ${
+                            isActive
+                              ? 'bg-black border-black shadow-[0_8px_30px_rgba(0,0,0,0.12)]'
+                              : 'bg-white border-black/[0.07] hover:border-black/25 hover:shadow-[0_4px_18px_rgba(0,0,0,0.06)]'
+                          }`}
+                        >
+                          <span
+                            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
+                              isActive
+                                ? 'bg-white text-black'
+                                : 'bg-black/[0.04] border border-black/[0.06] text-black/70 group-hover:bg-black group-hover:text-white'
+                            }`}
+                          >
+                            {getIcon(item.icon)}
+                          </span>
+                          <span
+                            className={`text-sm font-bold leading-tight ${
+                              isActive ? 'text-white' : 'text-black'
+                            }`}
+                          >
+                            {item.name}
+                          </span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              ))}
+
+              {/* Universal service card */}
+              <div className="rounded-2xl border border-dashed border-black/15 bg-[#F7F7F5] p-5 flex items-start gap-4">
+                <span className="w-10 h-10 shrink-0 rounded-xl bg-black text-white flex items-center justify-center">
+                  {getIcon(t.universal.icon)}
+                </span>
+                <div>
+                  <div className="text-sm font-bold text-black mb-1">{t.universal.service}</div>
+                  <p className="text-black/55 text-sm leading-relaxed">{t.universal.note}</p>
+                </div>
+              </div>
             </div>
 
             {/* Sticky detail panel */}
             <div ref={detailRef} className="lg:sticky lg:top-28 scroll-mt-28">
               <motion.div
-                key={selected}
+                key={`${selected.group}-${selected.item}`}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
                 className="rounded-3xl border border-black/[0.08] bg-[#F7F7F5] p-7 sm:p-8"
               >
                 <div className="w-12 h-12 rounded-2xl bg-black text-white flex items-center justify-center mb-5">
-                  {industryIcons[selected]}
+                  {getIcon(active.icon)}
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/35 mb-2">
+                  {activeGroup.service}
                 </div>
                 <h2 className="text-2xl font-display font-bold text-black leading-tight mb-2">
                   {active.name}
