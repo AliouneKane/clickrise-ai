@@ -22,3 +22,23 @@ export const SectionBadge = ({
     {children}
   </span>
 )
+
+/**
+ * Minimal text-only eyebrow — no pill/box chrome, just a short rule + label.
+ * Default section label across the site; SectionBadge (pill+dot) is reserved
+ * for the Why Us section only.
+ */
+export const SectionEyebrow = ({
+  children,
+  className = '',
+}: {
+  children: React.ReactNode
+  className?: string
+}) => (
+  <div
+    className={`inline-flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.22em] text-black/40 ${className}`}
+  >
+    <span className="h-px w-5 bg-black/30" />
+    {children}
+  </div>
+)

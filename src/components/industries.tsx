@@ -26,7 +26,7 @@ import {
 import { useLang } from '../lib/i18n'
 import { translations } from '../content/translations'
 import { Link, useRoute } from '../lib/router'
-import { SectionBadge } from './ui/section-badge'
+import { SectionEyebrow } from './ui/section-badge'
 import { useDocumentSeo, SEO } from '../lib/seo'
 
 // Icons keyed by the `icon` string set on each industry item in translations.ts —
@@ -63,7 +63,7 @@ export const IndustriesTeaser = () => {
   return (
     <section id="industries" className="py-24 px-6 bg-white border-t border-black/[0.06]">
       <div className="max-w-5xl mx-auto text-center">
-        <SectionBadge className="mb-4">{t.badge}</SectionBadge>
+        <SectionEyebrow className="mb-4 justify-center">{t.badge}</SectionEyebrow>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 text-black leading-[1.1]">
           {t.heading[0]}<br />{t.heading[1]}
         </h2>
@@ -99,7 +99,7 @@ export const IndustriesTeaser = () => {
             {getIcon(t.universal.icon)}
           </span>
           <p className="text-black/55 text-xs leading-relaxed">
-            <span className="font-bold text-black">{t.universal.service}</span> — {t.universal.note}
+            <span className="font-bold text-black">{t.universal.service}</span> · {t.universal.note}
           </p>
         </div>
 
@@ -179,7 +179,7 @@ export const IndustriesPage = () => {
         <div className="max-w-6xl mx-auto">
           {/* Page intro */}
           <div className="mb-12 max-w-2xl">
-            <SectionBadge className="mb-4">{t.badge}</SectionBadge>
+            <SectionEyebrow className="mb-4">{t.badge}</SectionEyebrow>
             <h1 className="text-4xl md:text-5xl font-display font-bold text-black leading-[1.1] mb-4">
               {t.heading[0]} {t.heading[1]}
             </h1>

@@ -12,6 +12,8 @@ import {
   ArrowRight,
   BarChart3,
   Bot,
+  Check,
+  Clock,
   Code2,
   Cpu,
   Database,
@@ -32,7 +34,7 @@ import {
 import { LangContext, useLang, type Lang } from './lib/i18n';
 import { RouteProvider, useRoute } from './lib/router';
 import { IndustriesTeaser, IndustriesPage } from './components/industries';
-import { SectionBadge } from './components/ui/section-badge';
+import { SectionBadge, SectionEyebrow } from './components/ui/section-badge';
 import { useDocumentSeo, SEO } from './lib/seo';
 import { translations } from './content/translations';
 
@@ -105,8 +107,10 @@ const BackgroundEffects = () => (
 const Hero = () => {
   const { lang } = useLang();
   const t = translations[lang].hero;
+  const cta = translations[lang].cta;
+  const howItWorks = translations[lang].howItWorks;
   const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   return (
     <section className="relative pt-32 pb-20 px-6 min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white">
@@ -125,7 +129,7 @@ const Hero = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <SectionBadge className="mb-6">{t.badge}</SectionBadge>
+          <SectionEyebrow className="mb-6">{t.badge}</SectionEyebrow>
 
           <h1 className="text-5xl md:text-6xl font-display font-bold leading-[1.05] mb-6 text-black">
             {t.h1[0]}<br />
@@ -160,108 +164,51 @@ const Hero = () => {
           </div>
         </motion.div>
 
-        {/* Hours saved chart */}
+        {/* Offer card — makes the actual offer (free diagnostic call) visible, not decorative */}
         <motion.div
           style={{ y }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
           className="relative hidden lg:flex items-center justify-center"
         >
-          <svg className="w-full" viewBox="0 0 500 255" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#0A0A0A" stopOpacity="0.09" />
-                <stop offset="100%" stopColor="#0A0A0A" stopOpacity="0" />
-              </linearGradient>
-            </defs>
+          <div className="w-full max-w-[380px] rounded-3xl border border-black/[0.08] bg-white shadow-[0_30px_80px_-25px_rgba(0,0,0,0.22)] overflow-hidden">
+            <div className="p-7 sm:p-8">
+              <div className="inline-flex items-center gap-2 rounded-full bg-black/[0.05] border border-black/[0.07] px-3 py-1.5 mb-6">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                </span>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-black/50">
+                  {howItWorks.steps[0].title}
+                </span>
+              </div>
 
-            {/* Chart title */}
-            <text x="263" y="17" textAnchor="middle" fill="rgba(0,0,0,0.28)" fontSize="9" fontFamily="DM Sans, sans-serif" letterSpacing="1">
-              {lang === 'fr' ? 'HEURES GAGNÉES / SEMAINE' : 'HOURS SAVED / WEEK · AVG.'}
-            </text>
+              <div className="text-4xl font-display font-bold text-black mb-2">15–20 min</div>
+              <p className="text-black/45 text-sm leading-relaxed mb-6">{cta.sub}</p>
 
-            {/* Horizontal grid lines + Y labels */}
-            {([20, 15, 10, 5] as const).map((h) => {
-              const yp = 220 - h * 9.25
-              return (
-                <React.Fragment key={h}>
-                  <line x1="48" y1={yp} x2="482" y2={yp} stroke="rgba(0,0,0,0.045)" strokeWidth="1" strokeDasharray="3 3" />
-                  <text x="40" y={yp + 3.5} textAnchor="end" fill="rgba(0,0,0,0.22)" fontSize="8" fontFamily="DM Sans, sans-serif">{h}</text>
-                </React.Fragment>
-              )
-            })}
-            <text x="40" y="223" textAnchor="end" fill="rgba(0,0,0,0.22)" fontSize="8" fontFamily="DM Sans, sans-serif">0</text>
+              <div className="space-y-3 mb-7">
+                {cta.steps.map((s) => (
+                  <div key={s.num} className="flex items-start gap-3">
+                    <span className="mt-0.5 w-5 h-5 rounded-full bg-black flex items-center justify-center shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </span>
+                    <span className="text-sm text-black/65 leading-snug">{s.text}</span>
+                  </div>
+                ))}
+              </div>
 
-            {/* X axis */}
-            <line x1="48" y1="220" x2="482" y2="220" stroke="rgba(0,0,0,0.09)" strokeWidth="1" />
-
-            {/* X labels: W1–W8 */}
-            {[0,1,2,3,4,5,6,7].map((i) => (
-              <text key={i} x={48 + i * 61.4} y="234" textAnchor="middle" fill="rgba(0,0,0,0.22)" fontSize="8" fontFamily="DM Sans, sans-serif">
-                {lang === 'fr' ? `S${i+1}` : `W${i+1}`}
-              </text>
-            ))}
-
-            {/* Gradient fill */}
-            <motion.path
-              d="M48,202 C68,196 89,191 109,183 C129,175 150,164 170,155 C191,146 212,136 232,128 C253,120 273,115 293,109 C313,103 334,97 354,91 C375,85 395,77 416,72 C437,67 457,66 478,63 L478,220 L48,220 Z"
-              fill="url(#chartGrad)"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.8, duration: 1 }}
-            />
-
-            {/* Curve — 2h → 4h → 7h → 10h → 12h → 14h → 16h → 17h */}
-            <motion.path
-              d="M48,202 C68,196 89,191 109,183 C129,175 150,164 170,155 C191,146 212,136 232,128 C253,120 273,115 293,109 C313,103 334,97 354,91 C375,85 395,77 416,72 C437,67 457,66 478,63"
-              fill="none"
-              stroke="#0A0A0A"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 1 }}
-              transition={{ duration: 2.4, ease: "easeInOut" }}
-            />
-
-            {/* Data dots W1–W7 (staggered with the curve draw) */}
-            {([[48,202],[109,183],[170,155],[232,128],[293,109],[354,91],[416,72]] as [number,number][]).map(([cx, cy], i) => (
-              <motion.circle
-                key={i}
-                cx={cx}
-                cy={cy}
-                r={2.5}
-                fill="#0A0A0A"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.35 }}
-                transition={{ delay: 0.3 + i * 0.3, duration: 0.25 }}
-              />
-            ))}
-
-            {/* Start annotation: 2h */}
-            <motion.text
-              x={48} y={192}
-              textAnchor="middle"
-              fill="rgba(0,0,0,0.32)"
-              fontSize="8.5"
-              fontFamily="DM Sans, sans-serif"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.4 }}
-            >
-              2h
-            </motion.text>
-
-            {/* Peak annotation: 17h */}
-            <motion.g
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 2.6, duration: 0.5 }}
-            >
-              <circle cx={478} cy={63} r={5} fill="#0A0A0A" />
-              <text x={478} y={51} textAnchor="middle" fill="#0A0A0A" fontSize="13" fontWeight="700" fontFamily="DM Sans, sans-serif">17h</text>
-            </motion.g>
-          </svg>
+              <button
+                data-cal-namespace="15min"
+                data-cal-link="alioune-kane-1qdw6v/15min"
+                data-cal-config='{"layout":"month_view"}'
+                className="w-full bg-black text-white py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-black/80 transition-all cursor-pointer"
+              >
+                {lang === 'fr' ? 'Choisir un créneau' : 'Pick a time'} <ArrowRight className="w-4 h-4" />
+              </button>
+              <p className="text-center text-[11px] text-black/35 mt-3">{cta.fine}</p>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -270,7 +217,7 @@ const Hero = () => {
 
 const SectionHeader = ({ title, subtitle, badge }: { title: string; subtitle: string; badge?: string }) => (
   <div className="text-center mb-16">
-    {badge && <SectionBadge className="mb-4">{badge}</SectionBadge>}
+    {badge && <SectionEyebrow className="mb-4 justify-center">{badge}</SectionEyebrow>}
     <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-black">{title}</h2>
     <p className="text-black/40 max-w-2xl mx-auto">{subtitle}</p>
   </div>
@@ -293,7 +240,7 @@ const Services = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div>
-            <SectionBadge className="mb-4">{t.badge}</SectionBadge>
+            <SectionEyebrow className="mb-4">{t.badge}</SectionEyebrow>
             <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight">
               {t.heading[0]}<br />{t.heading[1]}
             </h2>
@@ -387,54 +334,61 @@ const HowItWorks = () => {
   const { lang } = useLang();
   const t = translations[lang].howItWorks;
 
+  const icons = [
+    <Target className="w-5 h-5" />,
+    <FileText className="w-5 h-5" />,
+    <Code2 className="w-5 h-5" />,
+    <TrendingUp className="w-5 h-5" />,
+  ];
+
   return (
     <section id="how-it-works" className="py-24 px-6 bg-[#F7F7F5] border-y border-black/[0.06]">
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-[2fr_3fr] gap-16 items-start">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <SectionEyebrow className="mb-4 justify-center">{t.badge}</SectionEyebrow>
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight mb-5">
+            {lang === 'fr' ? <>{t.steps.length} étapes.<br />Pas de détour.</> : <>{t.steps.length} steps.<br />No fluff.</>}
+          </h2>
+          <p className="text-black/40 text-sm leading-relaxed">
+            {t.sub}
+          </p>
+        </div>
 
-          {/* Left — sticky text */}
-          <div className="lg:sticky lg:top-24">
-            <SectionBadge className="mb-4">{t.badge}</SectionBadge>
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight mb-5">
-              {lang === 'fr' ? <>{t.steps.length} étapes.<br />Pas de détour.</> : <>{t.steps.length} steps.<br />No fluff.</>}
-            </h2>
-            <p className="text-black/40 text-sm leading-relaxed mb-8 max-w-xs">
-              {t.sub}
-            </p>
-            <a
-              href="#book"
-              className="inline-flex items-center gap-2 border border-black/15 text-black text-sm font-bold px-6 py-3 rounded-full hover:bg-black/5 transition-all"
+        {/* Step row — connecting line behind numbered nodes, card content below */}
+        <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+          <div className="absolute top-6 left-0 right-0 h-px bg-black/10 hidden lg:block" />
+
+          {t.steps.map((step, i) => (
+            <motion.div
+              key={i}
+              className="relative"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1, duration: 0.4 }}
+              viewport={{ once: true }}
             >
-              {lang === 'fr' ? 'Voir comment ça marche' : 'See how it works'} <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="relative z-10 shrink-0 w-12 h-12 bg-white border border-black/10 rounded-full flex items-center justify-center shadow-sm text-black">
+                  {icons[i]}
+                </div>
+                <span className="lg:hidden text-black/25 font-display font-bold text-sm">{step.number}</span>
+              </div>
+              <div className="hidden lg:block text-black/20 font-display font-bold text-xs uppercase tracking-widest mb-2">
+                {lang === 'fr' ? `Étape ${step.number}` : `Step ${step.number}`}
+              </div>
+              <h3 className="text-lg font-bold text-black mb-2">{step.title}</h3>
+              <p className="text-black/40 text-sm leading-relaxed">{step.desc}</p>
+            </motion.div>
+          ))}
+        </div>
 
-          {/* Right — vertical timeline */}
-          <div className="relative">
-            <div className="absolute left-[19px] top-10 bottom-10 w-px bg-gradient-to-b from-black/10 via-black/10 to-transparent hidden sm:block" />
-
-            <div className="space-y-2">
-              {t.steps.map((step, i) => (
-                <motion.div
-                  key={i}
-                  className="flex gap-6 pb-8"
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1, duration: 0.4 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="shrink-0 w-10 h-10 bg-white border border-black/10 rounded-full flex items-center justify-center shadow-sm relative z-10">
-                    <span className="text-black font-display font-bold text-sm">{step.number}</span>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-black mb-2">{step.title}</h3>
-                    <p className="text-black/40 text-sm leading-relaxed">{step.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
+        <div className="text-center mt-14">
+          <a
+            href="#book"
+            className="inline-flex items-center gap-2 border border-black/15 text-black text-sm font-bold px-6 py-3 rounded-full hover:bg-black/5 transition-all"
+          >
+            {lang === 'fr' ? 'Voir comment ça marche' : 'See how it works'} <ArrowRight className="w-4 h-4" />
+          </a>
         </div>
       </div>
     </section>
@@ -452,37 +406,50 @@ const WhyUs = () => {
     <Globe className="w-5 h-5" />,
   ];
 
+  const [lead, ...rest] = t.reasons;
+
   return (
     <section id="why-us" className="py-16 px-4 md:py-24 md:px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="border border-black/[0.07] rounded-[28px] md:rounded-[40px] p-5 sm:p-8 md:p-12 relative overflow-hidden bg-[#F7F7F5]">
           <div className="absolute inset-0 grid-pattern opacity-60" />
           <div className="relative z-10">
-            <div className="text-center mb-10 md:mb-16">
+            <div className="text-center mb-10 md:mb-16 max-w-2xl mx-auto">
               <SectionBadge className="mb-4">{t.badge}</SectionBadge>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 md:mb-6 text-black leading-[1.1]">
                 {t.heading[0]}<br />{t.heading[1]}
               </h2>
-              <p className="text-black/50 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+              <p className="text-black/50 text-sm sm:text-base leading-relaxed">
                 {t.body}
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-3 sm:gap-5">
-              {t.reasons.map((r, i) => (
-                <div
-                  key={i}
-                  className="flex flex-col gap-3.5 p-5 sm:p-6 bg-white rounded-2xl border border-black/[0.07] hover:border-black/20 hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all"
-                >
-                  <div className="w-11 h-11 bg-black text-white rounded-xl flex items-center justify-center shrink-0">
-                    {icons[i]}
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-base sm:text-lg mb-1.5 text-black leading-snug">{r.title}</h3>
-                    <p className="text-black/55 text-sm leading-relaxed">{r.desc}</p>
-                  </div>
+            <div className="grid lg:grid-cols-[1fr_1.15fr] gap-4 sm:gap-5">
+              {/* Lead pillar — inverted, the strongest differentiator gets visual weight */}
+              <div className="flex flex-col justify-between gap-8 p-7 sm:p-9 bg-black rounded-2xl min-h-[280px]">
+                <div className="w-11 h-11 bg-white text-black rounded-xl flex items-center justify-center shrink-0">
+                  {icons[0]}
                 </div>
-              ))}
+                <div>
+                  <h3 className="font-display font-bold text-2xl sm:text-3xl mb-3 text-white leading-tight">{lead.title}</h3>
+                  <p className="text-white/55 text-sm sm:text-[15px] leading-relaxed">{lead.desc}</p>
+                </div>
+              </div>
+
+              {/* Remaining pillars — compact list, not repeated identical cards */}
+              <div className="bg-white rounded-2xl border border-black/[0.07] divide-y divide-black/[0.06] overflow-hidden">
+                {rest.map((r, i) => (
+                  <div key={i} className="flex items-start gap-4 p-6 sm:p-7">
+                    <div className="w-10 h-10 bg-black/[0.05] border border-black/[0.07] text-black/70 rounded-xl flex items-center justify-center shrink-0">
+                      {icons[i + 1]}
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-[15px] sm:text-base mb-1 text-black leading-snug">{r.title}</h3>
+                      <p className="text-black/55 text-sm leading-relaxed">{r.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -530,27 +497,13 @@ const CaseStudies = () => {
     'https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?q=80&w=1200&auto=format&fit=crop',
   ];
 
-  const pipelineSteps = lang === 'en'
-    ? [
-        { step: 'Google Maps', status: '142 leads scraped',         active: false },
-        { step: 'Enrichment',  status: 'Contact data added',        active: false },
-        { step: 'Sequences',   status: 'Emails personalized',       active: false },
-        { step: 'Send',        status: 'Running automatically',     active: true  },
-      ]
-    : [
-        { step: 'Google Maps',     status: '142 leads récupérés',         active: false },
-        { step: 'Enrichissement',  status: 'Données de contact ajoutées', active: false },
-        { step: 'Séquences',       status: 'Emails personnalisés',        active: false },
-        { step: 'Envoi',           status: 'En cours automatiquement',    active: true  },
-      ];
-
   return (
     <section id="work" className="py-24 px-8 bg-[#F7F7F5]">
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
         <div className="pb-12">
-          <SectionBadge className="mb-3">{t.badge}</SectionBadge>
+          <SectionEyebrow className="mb-3">{t.badge}</SectionEyebrow>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight max-w-xl">
               {t.heading}
@@ -581,44 +534,27 @@ const CaseStudies = () => {
                 </span>
               </div>
 
-              <div className="relative h-full flex flex-col items-center justify-center gap-6 p-8">
-                {/* Window card */}
-                <div className="w-full max-w-[320px] rounded-2xl border border-white/[0.1] bg-white/[0.04] backdrop-blur-sm shadow-[0_24px_70px_-20px_rgba(0,0,0,0.8)] overflow-hidden">
-                  <div className="flex items-center gap-1.5 px-4 py-3 border-b border-white/[0.07] bg-white/[0.02]">
-                    <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
-                    <span className="ml-auto text-[9px] uppercase tracking-wider text-white/30">
-                      {lang === 'fr' ? 'Flux automatisé' : 'Automation flow'}
-                    </span>
+              <div className="relative h-full flex flex-col items-center justify-center gap-8 p-8">
+                {/* Big stat — the outcome, not a fake product screenshot */}
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center mb-6 shadow-[0_8px_20px_-6px_rgba(255,255,255,0.4)]">
+                    <Mail className="w-4.5 h-4.5 text-black" />
                   </div>
-
-                  <div className="p-6">
-                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center mb-6 shadow-[0_8px_20px_-6px_rgba(255,255,255,0.4)]">
-                      <Mail className="w-4.5 h-4.5 text-black" />
-                    </div>
-
-                    <div>
-                      {pipelineSteps.map((row, i) => (
-                        <div key={i} className="relative flex items-start gap-3.5 pb-6 last:pb-0">
-                          {i < pipelineSteps.length - 1 && (
-                            <span className="absolute left-[7px] top-4 bottom-0 w-px bg-white/15" />
-                          )}
-                          <span
-                            className={`relative z-10 mt-0.5 w-[15px] h-[15px] rounded-full border-2 flex items-center justify-center shrink-0 ${
-                              row.active ? 'border-white bg-white' : 'border-white/25 bg-[#0E0E14]'
-                            }`}
-                          >
-                            {row.active && <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />}
-                          </span>
-                          <div className="flex flex-col gap-0.5">
-                            <span className="text-white/90 text-xs font-semibold">{row.step}</span>
-                            <span className="text-white/45 text-[11px]">{row.status}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="text-7xl sm:text-8xl font-display font-bold text-white leading-none mb-3">
+                    {featuredMetrics[0].value}
                   </div>
+                  <div className="text-white/45 text-sm uppercase tracking-widest">
+                    {featuredMetrics[0].label}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-8 border-t border-white/[0.08] pt-6">
+                  {featuredMetrics.slice(1).map((m) => (
+                    <div key={m.label} className="flex flex-col items-center gap-1">
+                      <div className="text-xl font-display font-bold text-white">{m.value}</div>
+                      <div className="text-white/35 text-[11px] uppercase tracking-wider">{m.label}</div>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="flex flex-wrap gap-1.5 justify-center max-w-[320px]">
@@ -645,7 +581,7 @@ const CaseStudies = () => {
             <div className="flex flex-col justify-center gap-5 p-8 lg:p-12">
               <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-black/40">
                 <span className="inline-flex items-center rounded-full bg-black/[0.06] border border-black/[0.08] px-3 py-1 text-black/55">
-                  {lang === 'en' ? 'Featured' : 'À la une'}
+                  {lang === 'en' ? 'Past project' : 'Ancien projet'}
                 </span>
                 <span>{featured.sector}</span>
               </div>
@@ -692,28 +628,42 @@ const CaseStudies = () => {
           }))}
         />
 
-        {/* Metrics band */}
-        <div className="mt-12 rounded-2xl border border-black/[0.07] bg-white p-10 md:p-12">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-display font-bold text-black md:text-3xl">
-              {lang === 'en' ? 'Outcomes that move the needle' : 'Des résultats qui font la différence'}
-            </h2>
-            <p className="mt-2 text-sm text-black/40 leading-relaxed max-w-md mx-auto">
-              {lang === 'en'
-                ? 'Every system runs automatically — once deployed, zero manual hours required.'
-                : 'Chaque système tourne automatiquement — une fois déployé, zéro heure manuelle requise.'}
-            </p>
+        {/* Metrics band — inverted for visual rhythm against the light sections around it */}
+        <div className="mt-6 rounded-2xl bg-black p-10 md:p-12 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:22px_22px] opacity-40 pointer-events-none" />
+          <div className="relative z-10">
+            <div className="text-center mb-10">
+              <h2 className="text-2xl font-display font-bold text-white md:text-3xl">
+                {lang === 'en' ? 'Outcomes that move the needle' : 'Des résultats qui font la différence'}
+              </h2>
+              <p className="mt-2 text-sm text-white/40 leading-relaxed max-w-md mx-auto">
+                {lang === 'en'
+                  ? 'Every system runs automatically. Once deployed, zero manual hours required.'
+                  : 'Chaque système tourne automatiquement. Une fois déployé, zéro heure manuelle requise.'}
+              </p>
+            </div>
+            <dl className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
+              {globalMetrics.map((m, i) => {
+                const metricIcons = [
+                  <Layers className="w-4 h-4" />,
+                  <Zap className="w-4 h-4" />,
+                  <Clock className="w-4 h-4" />,
+                  <TrendingUp className="w-4 h-4" />,
+                ];
+                return (
+                  <div key={m.label} className="flex flex-col items-center gap-3 text-center">
+                    <span className="w-9 h-9 rounded-lg bg-white/[0.08] border border-white/[0.1] flex items-center justify-center text-white/60">
+                      {metricIcons[i]}
+                    </span>
+                    <dd className="text-4xl font-display font-bold tracking-tight text-white md:text-5xl">
+                      {m.value}
+                    </dd>
+                    <dt className="text-sm text-white/40">{m.label}</dt>
+                  </div>
+                );
+              })}
+            </dl>
           </div>
-          <dl className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
-            {globalMetrics.map((m) => (
-              <div key={m.label} className="flex flex-col items-center gap-2 text-center">
-                <dd className="text-4xl font-display font-bold tracking-tight text-black md:text-5xl">
-                  {m.value}
-                </dd>
-                <dt className="text-sm text-black/40">{m.label}</dt>
-              </div>
-            ))}
-          </dl>
         </div>
 
       </div>
@@ -736,7 +686,7 @@ const About = () => {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <SectionBadge className="mb-4">{t.badge}</SectionBadge>
+          <SectionEyebrow className="mb-4 justify-center">{t.badge}</SectionEyebrow>
           <h2 className="text-4xl md:text-5xl font-display font-bold text-black leading-tight">
             {t.headline}
           </h2>
@@ -838,31 +788,63 @@ const About = () => {
 const Testimonials = () => {
   const { lang } = useLang();
   const t = translations[lang].testimonials;
+
+  const initials = (name: string) => name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+  const item = t.items[0];
+  const cut = 28; // corner-notch size in px, echoes the industries/case-study card language
+
   return (
-    <section className="py-24 px-6 bg-white">
+    <section className="py-24 px-6 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <SectionHeader badge={t.badge} title={t.heading} subtitle={t.sub} />
-        <div className="max-w-2xl mx-auto">
-          <div className="border border-black/[0.08] bg-[#F7F7F5] rounded-3xl p-10 relative">
-            <Quote className="w-8 h-8 text-black/10 mb-6" />
-            <p className="text-xl text-black font-medium leading-relaxed mb-8">"{t.quote}"</p>
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-black/10 rounded-full flex items-center justify-center">
-                <Users className="w-4 h-4 text-black/40" />
+
+        {/* Stacked-card treatment: one real quote up front, two blank "more coming" slots
+           behind it — honest about having a single testimonial today without pretending
+           the deck is empty. */}
+        <div className="relative max-w-xl mx-auto" style={{ height: 340 }}>
+          <div
+            className="absolute inset-0 border-2 border-black/10 bg-[#F7F7F5]"
+            style={{
+              clipPath: `polygon(${cut}px 0%, calc(100% - ${cut}px) 0%, 100% ${cut}px, 100% 100%, calc(100% - ${cut}px) 100%, ${cut}px 100%, 0 100%, 0 0)`,
+              transform: 'rotate(-3deg) translateY(10px)',
+            }}
+          />
+          <div
+            className="absolute inset-0 border-2 border-black/[0.06] bg-white"
+            style={{
+              clipPath: `polygon(${cut}px 0%, calc(100% - ${cut}px) 0%, 100% ${cut}px, 100% 100%, calc(100% - ${cut}px) 100%, ${cut}px 100%, 0 100%, 0 0)`,
+              transform: 'rotate(2deg) translateY(5px)',
+            }}
+          />
+
+          <div
+            className="absolute inset-0 flex flex-col justify-between border-2 border-black bg-white p-8 sm:p-10"
+            style={{
+              clipPath: `polygon(${cut}px 0%, calc(100% - ${cut}px) 0%, 100% ${cut}px, 100% 100%, calc(100% - ${cut}px) 100%, ${cut}px 100%, 0 100%, 0 0)`,
+              boxShadow: '0 20px 50px -20px rgba(0,0,0,0.25)',
+            }}
+          >
+            <div>
+              <Quote className="w-8 h-8 text-black/15 mb-5" />
+              <p className="text-xl sm:text-2xl text-black font-semibold leading-snug">"{item.quote}"</p>
+            </div>
+            <div className="flex items-center gap-3 pt-6">
+              <div className="w-11 h-11 bg-black text-white flex items-center justify-center text-xs font-bold shrink-0"
+                style={{ clipPath: `polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% 100%, calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 0)` }}>
+                {initials(item.author)}
               </div>
-              <div>
-                <div className="text-sm font-bold text-black">{t.author}</div>
-                <div className="text-xs text-black/35 italic">{t.note}</div>
-              </div>
+              <div className="text-sm font-bold text-black">{item.author}</div>
             </div>
           </div>
-          <div className="text-center mt-10">
-            <button data-cal-namespace="15min" data-cal-link="alioune-kane-1qdw6v/15min"
-              data-cal-config='{"layout":"month_view"}'
-              className="inline-flex items-center gap-2 bg-black text-white font-bold px-8 py-4 rounded-xl hover:bg-black/80 transition-colors cursor-pointer">
-              {t.cta} <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
+        </div>
+
+        <div className="text-center mt-10">
+          <p className="text-black/35 text-xs italic mb-8">{t.note}</p>
+          <button data-cal-namespace="15min" data-cal-link="alioune-kane-1qdw6v/15min"
+            data-cal-config='{"layout":"month_view"}'
+            className="inline-flex items-center gap-2 bg-black text-white font-bold px-8 py-4 rounded-xl hover:bg-black/80 transition-colors cursor-pointer">
+            {t.cta} <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </section>
