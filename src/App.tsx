@@ -517,8 +517,12 @@ const CaseStudies = () => {
             {/* Visual side */}
             <div className="relative overflow-hidden bg-[#0A0A0F] min-h-[420px] lg:min-h-0">
               <img
-                src="/images/case-study-illustration.png"
+                src="/images/case-study-illustration.jpg"
                 alt={featured.title}
+                width={1086}
+                height={1448}
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
